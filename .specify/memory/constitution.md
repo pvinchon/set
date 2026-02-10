@@ -1,50 +1,113 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# Set Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Lightweight & Fast
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+Every asset, dependency, and line of code MUST justify its weight.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+- Total initial payload MUST remain under 100 KB (compressed).
+- Zero external runtime dependencies: no frameworks, no CDN calls,
+  no third-party analytics at load time.
+- First Contentful Paint MUST occur within 1 second on a median
+  mobile connection (3G Fast profile).
+- Deno is the build tool. Lume is the static site generator. Its 
+  output MUST be optimised (minified, compressed).
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+**Rationale**: A game that loads instantly feels native and keeps
+players engaged. Heavy pages lose users before the first card is
+dealt.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### II. Offline-First
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+The game MUST be fully playable without a network connection after
+the first visit.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+- A Service Worker MUST cache all critical assets on install.
+- The app MUST register as a Progressive Web App (PWA) with a
+  valid manifest so it can be added to a home screen.
+- No gameplay feature may depend on a live server round-trip.
+- Cache versioning MUST invalidate stale assets on deploy.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+**Rationale**: A card game should work on a plane, in the subway,
+or on spotty café Wi-Fi. Offline capability removes friction and
+makes Set a reliable time-filler.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### III. Simplicity
+
+When in doubt, leave it out.
+
+- The UI MUST present only the elements needed for the current
+  game state — no chrome, no settings panels, no menus unless
+  absolutely required.
+- Every new feature MUST be justified against the question: "Does
+  this make playing a round of Set better?"
+- YAGNI applies universally: do not build for hypothetical future
+  needs.
+- Code SHOULD read clearly without extensive comments; prefer
+  descriptive names and small functions.
+
+**Rationale**: Set's elegance comes from its rules. The digital
+version should mirror that minimalism — nothing competes with the
+cards for the player's attention.
+
+## Technical Constraints
+
+- **Runtime**: Deno (latest stable). All tooling, scripts, and
+  development tasks run under Deno.
+- **Language**: TypeScript for all game logic and build
+  configuration. HTML and CSS for markup and styling.
+- **Styling**: Tailwind CSS for utility-first styling. Only used
+  classes MUST ship (purge unused styles at build time).
+- **Build**: Lume (Deno-native static site generator). Lume
+  handles templating, asset pipeline, and static output.
+- **Platform**: Modern evergreen browsers (last 2 versions of
+  Chrome, Firefox, Safari, Edge). No IE support.
+- **Rendering**: DOM-based.
+- **Testing**: `deno test` for automated tests covering game logic
+  (valid Set detection, deck generation, scoring).
+- **Repository**: GitHub. All source code, issues, and project
+  management live on GitHub.
+- **Continuous Integration**: GitHub Actions MUST run on every
+  push and pull request. The pipeline MUST lint, test, and build
+  the site. A failing pipeline MUST block merge.
+- **Continuous Deployment**: GitHub Actions MUST deploy the Lume
+  build output to GitHub Pages on every merge to `main`. No
+  manual deploy steps.
+- **Hosting**: GitHub Pages. The site MUST be fully functional as
+  static files served from GitHub Pages.
+- **Accessibility**: MUST meet WCAG 2.1 AA for colour contrast and
+  keyboard navigation at minimum.
+
+## Development Workflow
+
+- **Commits**: Small, atomic commits. Each commit SHOULD leave the
+  game in a working state.
+- **Branching**: Feature branches off `main`. Merge via GitHub
+  pull request after self-review or peer review.
+- **Continuous Integration gate**: Every PR MUST pass the GitHub
+  Actions pipeline (lint, test, build) before merge. No
+  exceptions.
+- **Continuous Deployment flow**: Merging to `main` triggers
+  automatic deployment to GitHub Pages via GitHub Actions.
+- **Performance gate**: The Continuous Integration pipeline SHOULD
+  include a Lighthouse audit. Performance score MUST be ≥ 95.
+- **Local dev**: Use `deno task` for all local commands (serve,
+  build, test, lint). No global tool installs beyond Deno.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution is the highest authority for project decisions.
+All contributions MUST comply with the principles above.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+- **Amendments**: Any change to this constitution MUST be proposed
+  in a dedicated PR, reviewed, and merged into `main`.
+- **Versioning**: The constitution follows semantic versioning
+  (MAJOR.MINOR.PATCH). Principle removals or redefinitions are
+  MAJOR; new principles or material expansions are MINOR;
+  clarifications and typo fixes are PATCH.
+- **Compliance**: Every PR review SHOULD include a constitution
+  compliance check. Violations MUST be resolved or explicitly
+  justified before merge.
+
+**Version**: 1.0.0 | **Ratified**: 2026-02-10 | **Last Amended**: 2026-02-10
