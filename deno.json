@@ -1,0 +1,34 @@
+{
+  "imports": {
+    "lume/": "https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.1/"
+  },
+  "tasks": {
+    "lume": "deno run -P=lume lume/cli.ts",
+    "build": "deno task lume",
+    "serve": "deno task lume -s",
+    "fmt": "deno fmt",
+    "lint": "deno lint",
+    "test": "deno test -A"
+  },
+  "unstable": ["temporal"],
+  "lock": false,
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "lume/jsx-runtime"
+  },
+  "lint": {
+    "plugins": ["https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.1/lint.ts"],
+    "rules": {
+      "exclude": ["no-import-prefix"]
+    },
+    "exclude": [".specify/", ".github/", ".vscode/", "specs/", "_site/"]
+  },
+  "fmt": {
+    "exclude": [".specify/", ".github/", ".vscode/", "specs/", "_site/"]
+  },
+  "permissions": {
+    "lume": {
+      "all": true
+    }
+  }
+}
