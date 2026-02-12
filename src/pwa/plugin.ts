@@ -4,7 +4,7 @@ import Site from "lume/core/site.ts";
 export default function plugin() {
   return (site: Site) => {
     site.add("pwa/src/service_worker.js", "service_worker.js");
-    site.add("pwa/src/manifest.webmanifest", "manifest.webmanifest");
+    site.add("pwa/src/manifest.webmanifest.vto", "manifest.webmanifest");
     site.add("pwa/src/icons", "icons");
 
     site.process([".js"], (pages) => {
