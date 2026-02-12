@@ -3,12 +3,12 @@
 // CACHE_NAME and PRECACHE_URLS are injected at build time by Lume.
 
 const CACHE_NAME = "__CACHE_NAME__";
-const PRECACHE_URLS = __PRECACHE_URLS__;
+const CACHE_URLS = __CACHE_URLS__;
 
 // Install: precache all critical assets
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(PRECACHE_URLS)),
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(CACHE_URLS)),
   );
   self.skipWaiting();
 });
