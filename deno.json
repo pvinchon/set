@@ -14,7 +14,8 @@
   "lock": false,
   "compilerOptions": {
     "jsx": "react-jsx",
-    "jsxImportSource": "lume/jsx-runtime"
+    "jsxImportSource": "lume/jsx-runtime",
+    "lib": ["deno.ns", "dom", "dom.iterable"]
   },
   "lint": {
     "plugins": ["https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.1/lint.ts"],

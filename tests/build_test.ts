@@ -29,9 +29,19 @@ Deno.test("build produces _site/index.html", async () => {
   );
 });
 
-Deno.test("index.html contains 'Hello, World!'", async () => {
+Deno.test("index.html contains game board container", async () => {
   const html = await Deno.readTextFile(`${SITE_DIR}/index.html`);
-  assertStringIncludes(html, "Hello, World!");
+  assertStringIncludes(html, 'id="game-board"');
+});
+
+Deno.test("index.html contains game script tag", async () => {
+  const html = await Deno.readTextFile(`${SITE_DIR}/index.html`);
+  assertStringIncludes(html, "/game/main.js");
+});
+
+Deno.test("index.html does not contain Hello World", async () => {
+  const html = await Deno.readTextFile(`${SITE_DIR}/index.html`);
+  assertNotMatch(html, /Hello,?\s*World/i);
 });
 
 Deno.test("build produces _site/style.css", async () => {
