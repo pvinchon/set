@@ -1,4 +1,4 @@
-export type { GameState } from "./model.ts";
-export { generateInitialState } from "./generator.ts";
-export { selectCard, type SelectionResult } from "./actions.ts";
-export { renderGame } from "./renderer.ts";
+export type { GameState } from "@/game/state/model.ts";
+export { generateInitialState } from "@/game/state/generator.ts";
+export { selectCard, type SelectionResult } from "@/game/state/actions.ts";
+export { renderGame } from "@/game/state/renderer.ts";

@@ -1,5 +1,5 @@
 import { assertEquals, assertStringIncludes } from "jsr:@std/assert@1";
-import { getShadingStyle, Shading } from "./shading.ts";
+import { renderShading, Shading } from "@/game/attributes/shading.ts";
 
 Deno.test("Shading enum has values 0, 1, 2", () => {
   assertEquals(Shading.A, 0);

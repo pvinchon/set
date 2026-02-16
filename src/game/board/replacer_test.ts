@@ -1,8 +1,8 @@
 import { assertEquals } from "jsr:@std/assert@1";
-import { replaceCards } from "./replacer.ts";
-import { createCard } from "../card/mod.ts";
-import { Color, Num, Shading, Shape } from "../attributes/mod.ts";
-import type { Board } from "./model.ts";
+import { replaceCards } from "@/game/board/replacer.ts";
+import { createCard } from "@/game/card/mod.ts";
+import { Color, Num, Shading, Shape } from "@/game/attributes/mod.ts";
+import type { Board } from "@/game/board/model.ts";
 
 Deno.test("replaceCards swaps cards at specified indices", () => {
   const original: Board = {

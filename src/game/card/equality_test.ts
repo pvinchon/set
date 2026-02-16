@@ -1,7 +1,7 @@
 import { assertEquals } from "jsr:@std/assert@1";
-import { cardEquals } from "./equality.ts";
-import { createCard } from "./model.ts";
-import { Color, Num, Shading, Shape } from "../attributes/mod.ts";
+import { cardEquals } from "@/game/card/equality.ts";
+import { createCard } from "@/game/card/model.ts";
+import { Color, Num, Shading, Shape } from "@/game/attributes/mod.ts";
 
 Deno.test("cardEquals returns true for identical cards", () => {
   const card1 = createCard(Num.A, Shape.B, Shading.C, Color.A);

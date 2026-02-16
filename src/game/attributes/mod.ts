@@ -1,4 +1,4 @@
-export { Num } from "./num.ts";
-export { Shape, shapePath } from "./shape.ts";
-export { getShadingStyle, Shading, type ShadingStyle } from "./shading.ts";
-export { Color, COLOR_HEX } from "./color.ts";
+export { Num, renderNum } from "@/game/attributes/num.ts";
+export { renderShape, Shape, shapePath } from "@/game/attributes/shape.ts";
+export { renderShading, Shading } from "@/game/attributes/shading.ts";
+export { Color, COLOR_HEX, renderColor } from "@/game/attributes/color.ts";

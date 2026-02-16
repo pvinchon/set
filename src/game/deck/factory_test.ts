@@ -1,7 +1,7 @@
 import { assertEquals, assertThrows } from "jsr:@std/assert@1";
-import { createDeck } from "./factory.ts";
-import { Color, Num, Shading, Shape } from "../attributes/mod.ts";
-import { cardEquals } from "../card/mod.ts";
+import { createDeck } from "@/game/deck/factory.ts";
+import { Color, Num, Shading, Shape } from "@/game/attributes/mod.ts";
+import { cardEquals } from "@/game/card/mod.ts";
 
 Deno.test("createDeck with no options produces 81 unique cards", () => {
   const deck = createDeck();

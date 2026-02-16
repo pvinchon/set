@@ -1,6 +1,10 @@
-import { createDeck } from "./deck/mod.ts";
-import { generateInitialState, renderGame, selectCard } from "./state/mod.ts";
-import type { GameState } from "./state/mod.ts";
+import { createDeck } from "@/game/deck/mod.ts";
+import {
+  generateInitialState,
+  renderGame,
+  selectCard,
+} from "@/game/state/mod.ts";
+import type { GameState } from "@/game/state/mod.ts";
 
 export function initGame(container: HTMLElement): void {
   const deck = createDeck();

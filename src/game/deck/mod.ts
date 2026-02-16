@@ -1,3 +1,3 @@
-export type { Deck } from "./model.ts";
-export { createDeck, type DeckOptions } from "./factory.ts";
-export { drawCards } from "./draw.ts";
+export type { Deck } from "@/game/deck/model.ts";
+export { createDeck, type DeckOptions } from "@/game/deck/factory.ts";
+export { drawCards } from "@/game/deck/draw.ts";

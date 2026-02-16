@@ -1,4 +1,4 @@
-export type { Card } from "./model.ts";
-export { createCard } from "./model.ts";
-export { cardEquals } from "./equality.ts";
-export { renderCard } from "./renderer.ts";
+export type { Card } from "@/game/card/model.ts";
+export { createCard } from "@/game/card/model.ts";
+export { cardEquals } from "@/game/card/equality.ts";
+export { renderCard } from "@/game/card/renderer.ts";

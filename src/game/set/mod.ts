@@ -1,1 +1,1 @@
-export { hasAnySet, isValidSet } from "./validator.ts";
+export { hasAnySet, isValidSet } from "@/game/set/validator.ts";

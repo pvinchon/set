@@ -1,7 +1,7 @@
 import { assertEquals } from "jsr:@std/assert@1";
-import { hasAnySet, isValidSet } from "./validator.ts";
-import { createCard } from "../card/mod.ts";
-import { Color, Num, Shading, Shape } from "../attributes/mod.ts";
+import { hasAnySet, isValidSet } from "@/game/set/validator.ts";
+import { createCard } from "@/game/card/mod.ts";
+import { Color, Num, Shading, Shape } from "@/game/attributes/mod.ts";
 
 // ---- isValidSet tests ----
 

@@ -1,8 +1,8 @@
 import { assert, assertEquals } from "jsr:@std/assert@1";
-import { createDeck } from "./factory.ts";
-import { drawCards } from "./draw.ts";
-import { cardEquals, createCard } from "../card/mod.ts";
-import { Color, Num, Shading, Shape } from "../attributes/mod.ts";
+import { createDeck } from "@/game/deck/factory.ts";
+import { drawCards } from "@/game/deck/draw.ts";
+import { cardEquals, createCard } from "@/game/card/mod.ts";
+import { Color, Num, Shading, Shape } from "@/game/attributes/mod.ts";
 
 Deno.test("drawCards returns requested number of cards", () => {
   const deck = createDeck();

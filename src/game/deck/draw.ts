@@ -1,6 +1,6 @@
-import type { Deck } from "./model.ts";
-import type { Card } from "../card/mod.ts";
-import { cardEquals } from "../card/mod.ts";
+import type { Deck } from "@/game/deck/model.ts";
+import type { Card } from "@/game/card/mod.ts";
+import { cardEquals } from "@/game/card/mod.ts";
 
 export function drawCards(
   deck: Deck,

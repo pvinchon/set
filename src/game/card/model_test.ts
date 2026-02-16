@@ -1,6 +1,6 @@
 import { assertEquals } from "jsr:@std/assert@1";
-import { createCard } from "./model.ts";
-import { Color, Num, Shading, Shape } from "../attributes/mod.ts";
+import { createCard } from "@/game/card/model.ts";
+import { Color, Num, Shading, Shape } from "@/game/attributes/mod.ts";
 
 Deno.test("createCard returns card with correct attributes", () => {
   const card = createCard(Num.A, Shape.B, Shading.C, Color.A);

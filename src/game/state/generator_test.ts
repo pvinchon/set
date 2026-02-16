@@ -1,9 +1,9 @@
 import { assert, assertEquals } from "jsr:@std/assert@1";
-import { generateInitialState } from "./generator.ts";
-import { createDeck } from "../deck/mod.ts";
-import { hasAnySet } from "../set/mod.ts";
-import { cardEquals } from "../card/mod.ts";
-import { EMPTY_SELECTION } from "../selection/mod.ts";
+import { generateInitialState } from "@/game/state/generator.ts";
+import { createDeck } from "@/game/deck/mod.ts";
+import { hasAnySet } from "@/game/set/mod.ts";
+import { cardEquals } from "@/game/card/mod.ts";
+import { EMPTY_SELECTION } from "@/game/selection/mod.ts";
 
 Deno.test("generateInitialState returns 12 cards on board", () => {
   const deck = createDeck();

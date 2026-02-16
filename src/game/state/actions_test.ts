@@ -1,12 +1,12 @@
 import { assert, assertEquals } from "jsr:@std/assert@1";
-import { selectCard } from "./actions.ts";
-import { generateInitialState } from "./generator.ts";
-import { createDeck } from "../deck/mod.ts";
-import { hasAnySet, isValidSet } from "../set/mod.ts";
-import { createCard } from "../card/mod.ts";
-import { Color, Num, Shading, Shape } from "../attributes/mod.ts";
-import type { GameState } from "./model.ts";
-import type { Board } from "../board/mod.ts";
+import { selectCard } from "@/game/state/actions.ts";
+import { generateInitialState } from "@/game/state/generator.ts";
+import { createDeck } from "@/game/deck/mod.ts";
+import { hasAnySet, isValidSet } from "@/game/set/mod.ts";
+import { createCard } from "@/game/card/mod.ts";
+import { Color, Num, Shading, Shape } from "@/game/attributes/mod.ts";
+import type { GameState } from "@/game/state/model.ts";
+import type { Board } from "@/game/board/mod.ts";
 
 function createTestState(): GameState {
   const deck = createDeck();

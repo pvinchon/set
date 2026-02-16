@@ -1,5 +1,5 @@
-import type { Selection } from "./model.ts";
-import { EMPTY_SELECTION } from "./model.ts";
+import type { Selection } from "@/game/selection/model.ts";
+import { EMPTY_SELECTION } from "@/game/selection/model.ts";
 
 export function toggleSelection(
   selection: Selection,

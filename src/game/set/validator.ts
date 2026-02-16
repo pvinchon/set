@@ -1,4 +1,4 @@
-import type { Card } from "../card/mod.ts";
+import type { Card } from "@/game/card/mod.ts";
 
 // A set is valid if for each feature, the 3 values are either all same or all different
 // Mathematical check: (a + b + c) % 3 === 0 works because:

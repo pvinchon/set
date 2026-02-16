@@ -1,5 +1,5 @@
 import { assertEquals, assertStringIncludes } from "jsr:@std/assert@1";
-import { Shape, shapePath } from "./shape.ts";
+import { renderShape, Shape, shapePath } from "@/game/attributes/shape.ts";
 
 Deno.test("Shape enum has values 0, 1, 2", () => {
   assertEquals(Shape.A, 0);

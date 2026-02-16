@@ -1,12 +1,12 @@
-import type { GameState } from "./model.ts";
+import type { GameState } from "@/game/state/model.ts";
 import {
   EMPTY_SELECTION,
   isComplete,
   toggleSelection,
-} from "../selection/mod.ts";
-import { hasAnySet, isValidSet } from "../set/mod.ts";
-import { drawCards } from "../deck/mod.ts";
-import { replaceCards } from "../board/mod.ts";
+} from "@/game/selection/mod.ts";
+import { hasAnySet, isValidSet } from "@/game/set/mod.ts";
+import { drawCards } from "@/game/deck/mod.ts";
+import { replaceCards } from "@/game/board/mod.ts";
 
 export type SelectionResult =
   | { type: "selected"; state: GameState }

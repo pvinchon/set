@@ -1,5 +1,5 @@
-import type { GameState } from "./model.ts";
-import { renderCard } from "../card/mod.ts";
+import type { GameState } from "@/game/state/model.ts";
+import { renderCard } from "@/game/card/mod.ts";
 
 export function renderGame(
   state: GameState,

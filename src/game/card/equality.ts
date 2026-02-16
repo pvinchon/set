@@ -1,4 +1,4 @@
-import type { Card } from "./model.ts";
+import type { Card } from "@/game/card/model.ts";
 
 export function cardEquals(a: Card, b: Card): boolean {
   return (

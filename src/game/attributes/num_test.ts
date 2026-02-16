@@ -1,5 +1,5 @@
 import { assertEquals } from "jsr:@std/assert@1";
-import { Num } from "./num.ts";
+import { Num, renderNum } from "@/game/attributes/num.ts";
 
 Deno.test("Num enum has values 0, 1, 2", () => {
   assertEquals(Num.A, 0);

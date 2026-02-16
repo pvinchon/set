@@ -1,4 +1,4 @@
-import { Color, Num, Shading, Shape } from "../attributes/mod.ts";
+import { Color, Num, Shading, Shape } from "@/game/attributes/mod.ts";
 
 export interface Card {
   readonly num: Num;

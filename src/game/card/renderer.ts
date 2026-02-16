@@ -1,5 +1,11 @@
-import type { Card } from "./model.ts";
-import { COLOR_HEX, getShadingStyle, shapePath } from "../attributes/mod.ts";
+import type { Card } from "@/game/card/model.ts";
+import { cx } from "@/utils/cx.ts";
+import {
+  renderColor,
+  renderNum,
+  renderShading,
+  renderShape,
+} from "@/game/attributes/mod.ts";
 
 const CARD_BASE_CLASSES = [
   "card",

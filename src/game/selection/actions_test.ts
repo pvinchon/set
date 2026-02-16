@@ -1,6 +1,10 @@
 import { assertEquals } from "jsr:@std/assert@1";
-import { clearSelection, isComplete, toggleSelection } from "./actions.ts";
-import { EMPTY_SELECTION } from "./model.ts";
+import {
+  clearSelection,
+  isComplete,
+  toggleSelection,
+} from "@/game/selection/actions.ts";
+import { EMPTY_SELECTION } from "@/game/selection/model.ts";
 
 Deno.test("toggleSelection adds index to empty selection", () => {
   const result = toggleSelection(EMPTY_SELECTION, 5);

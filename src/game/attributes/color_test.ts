@@ -1,5 +1,5 @@
 import { assertEquals } from "jsr:@std/assert@1";
-import { Color, COLOR_HEX } from "./color.ts";
+import { Color, COLOR_HEX, renderColor } from "@/game/attributes/color.ts";
 
 Deno.test("Color enum has values 0, 1, 2", () => {
   assertEquals(Color.A, 0);

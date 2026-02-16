@@ -1,6 +1,6 @@
-import type { Deck } from "./model.ts";
-import { createCard } from "../card/mod.ts";
-import { Color, Num, Shading, Shape } from "../attributes/mod.ts";
+import type { Deck } from "@/game/deck/model.ts";
+import { createCard } from "@/game/card/mod.ts";
+import { Color, Num, Shading, Shape } from "@/game/attributes/mod.ts";
 
 export interface DeckOptions {
   readonly nums?: readonly Num[];

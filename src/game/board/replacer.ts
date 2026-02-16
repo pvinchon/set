@@ -1,5 +1,5 @@
-import type { Board } from "./model.ts";
-import type { Card } from "../card/mod.ts";
+import type { Board } from "@/game/board/model.ts";
+import type { Card } from "@/game/card/mod.ts";
 
 export function replaceCards(
   board: Board,
