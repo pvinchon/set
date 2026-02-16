@@ -5,6 +5,10 @@ Auto-generated from all feature plans. Last updated: 2026-02-11
 ## Active Technologies
 - TypeScript (Deno latest stable) for build config; vanilla JavaScript for the Service Worker (runs in the browser, not Deno) + Lume 3.2.1 (static site generator), Tailwind CSS (styling), no new dependencies (002-offline-support)
 - Browser Cache Storage API (client-side only) (002-offline-support)
+- TypeScript (Deno latest stable) for game logic and build; vanilla JavaScript for browser runtime + Lume 3.2.1 (static site generator), Tailwind CSS (styling), no new dependencies (003-set-card-game)
+- N/A -- no persistence; game state is in-memory only (003-set-card-game)
+- TypeScript (Deno latest stable) + Lume (static site generator), Tailwind CSS, esbuild plugin (003-set-card-game)
+- N/A (in-memory only, no persistence) (003-set-card-game)
 
 - TypeScript (Deno latest stable) for build configuration; HTML + CSS for markup and styling + Lume (Deno-native static site generator), Tailwind CSS (via Lume plugin) (001-hello-world-website)
 
@@ -24,9 +28,10 @@ npm test && npm run lint
 TypeScript (Deno latest stable) for build configuration; HTML + CSS for markup and styling: Follow standard conventions
 
 ## Recent Changes
+- 003-set-card-game: Added TypeScript (Deno latest stable) + Lume (static site generator), Tailwind CSS, esbuild plugin
+- 003-set-card-game: Added TypeScript (Deno latest stable) for game logic and build; vanilla JavaScript for browser runtime + Lume 3.2.1 (static site generator), Tailwind CSS (styling), no new dependencies
 - 002-offline-support: Added TypeScript (Deno latest stable) for build config; vanilla JavaScript for the Service Worker (runs in the browser, not Deno) + Lume 3.2.1 (static site generator), Tailwind CSS (styling), no new dependencies
 
-- 001-hello-world-website: Added TypeScript (Deno latest stable) for build configuration; HTML + CSS for markup and styling + Lume (Deno-native static site generator), Tailwind CSS (via Lume plugin)
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->

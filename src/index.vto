@@ -1,10 +1,11 @@
 ---
 layout: layout.vto
-title: Hello, World!
+title: Set Card Game
 ---
 
-<main class="flex min-h-screen items-center justify-center bg-white">
-  <h1 class="text-4xl font-bold text-gray-900 sm:text-5xl md:text-6xl">
-    Hello, World!
-  </h1>
+<main class="flex min-h-screen flex-col items-center justify-center gap-8 bg-gray-100 p-4">
+  <h1 class="text-3xl font-bold text-gray-900">Set</h1>
+  <div id="game-board" class="group grid grid-cols-3 sm:grid-cols-4 gap-4 max-w-screen-sm w-full"></div>
 </main>
+
+<script type="module" src="/game/main.js"></script>
