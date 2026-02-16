@@ -44,11 +44,17 @@ function createMockSVG(): {
     d?: string;
   }[];
   appendChild: (child: unknown) => void;
+  attributes: Record<string, string>;
+  setAttribute: (name: string, value: string) => void;
 } {
   const svg: ReturnType<typeof createMockSVG> = {
     children: [],
     appendChild(child: unknown) {
       svg.children.push(child as typeof svg.children[0]);
+    },
+    attributes: {},
+    setAttribute(name: string, value: string) {
+      svg.attributes[name] = value;
     },
   };
   return svg;
@@ -94,7 +100,7 @@ Deno.test("renderShape appends a child to each SVG", () => {
       mockPath.attributes["class"],
       "stroke-[var(--attribute-color)]",
     );
-    assertStringIncludes(mockPath.attributes["class"], "stroke-2");
+    assertStringIncludes(mockPath.attributes["stroke-width"], "4px");
   } finally {
     if (originalCreateElementNS) {
       // deno-lint-ignore no-explicit-any

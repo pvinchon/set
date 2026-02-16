@@ -38,10 +38,13 @@ export function shapePath(shape: Shape, width: number, height: number): string {
   }
 }
 
+const WIDTH = 80;
+const HEIGHT = 80;
+const STROKE_WIDTH = 4;
+
 const PATH_CLASSES = [
   "fill-[var(--attribute-fill)]",
   "stroke-[var(--attribute-color)]",
-  "stroke-2",
 ].join(" ");
 
 export function renderShape(
@@ -49,9 +52,17 @@ export function renderShape(
   svgs: SVGSVGElement[],
 ): SVGSVGElement[] {
   return svgs.map((svg) => {
+    svg.setAttribute(
+      "viewBox",
+      `${0 - STROKE_WIDTH / 2} ${0 - STROKE_WIDTH / 2} ${
+        WIDTH + STROKE_WIDTH
+      } ${HEIGHT + STROKE_WIDTH}`,
+    );
+
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    path.setAttribute("d", shapePath(shape, 80, 80));
+    path.setAttribute("d", shapePath(shape, WIDTH, HEIGHT));
     path.setAttribute("class", PATH_CLASSES);
+    path.setAttribute("stroke-width", `${STROKE_WIDTH}px`);
     svg.appendChild(path);
     return svg;
   });

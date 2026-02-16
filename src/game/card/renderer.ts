@@ -45,8 +45,8 @@ const SVG_CLASSES = [
 
 function createBaseSVG(): SVGSVGElement {
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  svg.setAttribute("viewBox", "0 0 80 80");
   svg.setAttribute("class", SVG_CLASSES);
+
   return svg;
 }
 
