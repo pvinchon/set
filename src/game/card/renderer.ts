@@ -8,7 +8,6 @@ import {
 } from "@/game/attributes/mod.ts";
 
 const CARD_BASE_CLASSES = [
-  "card",
   "aspect-[2/3]",
   "bg-white",
   "border-2",
@@ -28,38 +27,42 @@ const CARD_BASE_CLASSES = [
   "hover:shadow-lg",
 ].join(" ");
 
-function createShapeSVG(card: Card, index: number): string {
-  const color = COLOR_HEX[card.color];
-  const path = shapePath(card.shape, 80, 80);
-  const patternId = `stripe-${index}`;
-  const style = getShadingStyle(card.shading, color, patternId);
+const SELECTED_CLASSES = [
+  "border-blue-500",
+  "ring-3",
+  "ring-blue-500/30",
+  "group-data-[feedback=valid]:border-green-600",
+  "group-data-[feedback=valid]:ring-green-600/40",
+  "group-data-[feedback=invalid]:border-red-600",
+  "group-data-[feedback=invalid]:ring-red-600/40",
+  "group-data-[feedback=invalid]:animate-shake",
+].join(" ");
 
-  return `
-    <svg viewBox="0 0 80 80" class="w-10 h-10">
-      ${style.defs ?? ""}
-      <path d="${path}" fill="${style.fill}" stroke="${style.stroke}" stroke-width="2"/>
-    </svg>
-  `;
+const SVG_CLASSES = [
+  "w-10",
+  "h-10",
+].join(" ");
+
+function createBaseSVG(): SVGSVGElement {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("viewBox", "0 0 80 80");
+  svg.setAttribute("class", SVG_CLASSES);
+  return svg;
 }
 
-export function renderCard(
-  card: Card,
-  index: number,
-  isSelected: boolean,
-): HTMLElement {
+export function renderCard(card: Card, selected = false): HTMLElement {
   const el = document.createElement("div");
-  el.className = isSelected
-    ? `${CARD_BASE_CLASSES} selected`
-    : CARD_BASE_CLASSES;
-  el.dataset.index = String(index);
+  el.className = cx(CARD_BASE_CLASSES, selected && SELECTED_CLASSES);
 
-  // Number of shapes (1, 2, or 3)
-  const count = card.num + 1;
-  const shapes = Array.from(
-    { length: count },
-    (_, i) => createShapeSVG(card, index * 3 + i),
-  ).join("");
+  let svgs: SVGSVGElement[] = [createBaseSVG()];
+  svgs = renderShape(card.shape, svgs);
+  svgs = renderColor(card.color, svgs);
+  svgs = renderShading(card.shading, svgs);
+  svgs = renderNum(card.num, svgs);
 
-  el.innerHTML = shapes;
+  for (const svg of svgs) {
+    el.appendChild(svg);
+  }
+
   return el;
 }

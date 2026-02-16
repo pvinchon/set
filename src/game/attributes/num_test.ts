@@ -20,3 +20,47 @@ Deno.test("Num values enable modular arithmetic", () => {
   assertEquals((Num.A + Num.A + Num.B) % 3 !== 0, true);
   assertEquals((Num.B + Num.B + Num.A) % 3 !== 0, true);
 });
+
+// renderNum tests
+
+function createMockSVG(): {
+  cloneNode: (deep: boolean) => ReturnType<typeof createMockSVG>;
+  querySelectorAll: (selector: string) => never[];
+} {
+  return {
+    cloneNode(_deep: boolean) {
+      return createMockSVG();
+    },
+    querySelectorAll(_selector: string) {
+      return [];
+    },
+  };
+}
+
+Deno.test("renderNum returns 1 SVG for Num.A", () => {
+  const mock = createMockSVG();
+  const result = renderNum(Num.A, [mock as unknown as SVGSVGElement]);
+
+  assertEquals(result.length, 1);
+});
+
+Deno.test("renderNum returns 2 SVGs for Num.B", () => {
+  const mock = createMockSVG();
+  const result = renderNum(Num.B, [mock as unknown as SVGSVGElement]);
+
+  assertEquals(result.length, 2);
+});
+
+Deno.test("renderNum returns 3 SVGs for Num.C", () => {
+  const mock = createMockSVG();
+  const result = renderNum(Num.C, [mock as unknown as SVGSVGElement]);
+
+  assertEquals(result.length, 3);
+});
+
+Deno.test("renderNum first element is the original SVG", () => {
+  const mock = createMockSVG();
+  const result = renderNum(Num.C, [mock as unknown as SVGSVGElement]);
+
+  assertEquals(result[0] as unknown, mock);
+});

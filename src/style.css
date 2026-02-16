@@ -1,19 +1,5 @@
 @import "tailwindcss";
 
-/* Selected and feedback states - require CSS for compound selectors */
-.card.selected {
-  @apply border-blue-500 shadow-[0_0_0_3px_rgba(59,130,246,0.3)];
-}
-
-.game-board.feedback-valid .card.selected {
-  @apply border-green-600 shadow-[0_0_0_3px_rgba(22,163,74,0.4)];
-}
-
-.game-board.feedback-invalid .card.selected {
-  @apply border-red-600 shadow-[0_0_0_3px_rgba(220,38,38,0.4)];
-  animation: shake 0.3s ease;
-}
-
 @keyframes shake {
   0%, 100% {
     transform: translateX(0);
@@ -24,4 +10,8 @@
   75% {
     transform: translateX(4px);
   }
+}
+
+@utility animate-shake {
+  animation: shake 0.3s ease;
 }

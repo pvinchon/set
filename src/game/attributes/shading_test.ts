@@ -7,37 +7,67 @@ Deno.test("Shading enum has values 0, 1, 2", () => {
   assertEquals(Shading.C, 2);
 });
 
-const TEST_COLOR = "#ff0000";
-const TEST_PATTERN_ID = "test-stripe";
+// renderShading tests
 
-Deno.test("getShadingStyle for solid returns color fill", () => {
-  const style = getShadingStyle(Shading.A, TEST_COLOR, TEST_PATTERN_ID);
+function createMockSVG(): {
+  style: {
+    setProperty: (name: string, value: string) => void;
+    props: Record<string, string>;
+  };
+  innerHTML: string;
+  insertAdjacentHTML: (position: string, html: string) => void;
+} {
+  const props: Record<string, string> = {};
+  let innerHTML = "";
+  return {
+    style: {
+      props,
+      setProperty(name: string, value: string) {
+        props[name] = value;
+      },
+    },
+    get innerHTML() {
+      return innerHTML;
+    },
+    insertAdjacentHTML(_position: string, html: string) {
+      innerHTML = html + innerHTML;
+    },
+  };
+}
 
-  assertEquals(style.fill, TEST_COLOR);
-  assertEquals(style.stroke, TEST_COLOR);
-  assertEquals(style.defs, undefined);
+Deno.test("renderShading solid sets --attribute-fill to var(--attribute-color)", () => {
+  const mock = createMockSVG();
+  renderShading(Shading.A, [mock as unknown as SVGSVGElement]);
+
+  assertEquals(mock.style.props["--attribute-fill"], "var(--attribute-color)");
 });
 
-Deno.test("getShadingStyle for striped returns pattern fill", () => {
-  const style = getShadingStyle(Shading.B, TEST_COLOR, TEST_PATTERN_ID);
+Deno.test("renderShading open sets --attribute-fill to none", () => {
+  const mock = createMockSVG();
+  renderShading(Shading.C, [mock as unknown as SVGSVGElement]);
 
-  assertEquals(style.fill, `url(#${TEST_PATTERN_ID})`);
-  assertEquals(style.stroke, TEST_COLOR);
-  assertStringIncludes(style.defs!, `id="${TEST_PATTERN_ID}"`);
-  assertStringIncludes(style.defs!, "pattern");
+  assertEquals(mock.style.props["--attribute-fill"], "none");
 });
 
-Deno.test("getShadingStyle for open returns no fill", () => {
-  const style = getShadingStyle(Shading.C, TEST_COLOR, TEST_PATTERN_ID);
+Deno.test("renderShading striped sets --attribute-fill to url pattern", () => {
+  const mock = createMockSVG();
+  renderShading(Shading.B, [mock as unknown as SVGSVGElement]);
 
-  assertEquals(style.fill, "none");
-  assertEquals(style.stroke, TEST_COLOR);
-  assertEquals(style.defs, undefined);
+  const fillValue = mock.style.props["--attribute-fill"]!;
+  assertStringIncludes(fillValue, "url(#stripe-");
+  assertStringIncludes(mock.innerHTML, "<defs>");
+  assertStringIncludes(mock.innerHTML, "pattern");
 });
 
-Deno.test("getShadingStyle striped pattern uses correct color", () => {
-  const color = "#00ff00";
-  const style = getShadingStyle(Shading.B, color, "my-pattern");
+Deno.test("renderShading applies to all SVGs in array", () => {
+  const mock1 = createMockSVG();
+  const mock2 = createMockSVG();
+  const result = renderShading(Shading.A, [
+    mock1 as unknown as SVGSVGElement,
+    mock2 as unknown as SVGSVGElement,
+  ]);
 
-  assertStringIncludes(style.defs!, `stroke="${color}"`);
+  assertEquals(result.length, 2);
+  assertEquals(mock1.style.props["--attribute-fill"], "var(--attribute-color)");
+  assertEquals(mock2.style.props["--attribute-fill"], "var(--attribute-color)");
 });

@@ -37,3 +37,22 @@ export function shapePath(shape: Shape, width: number, height: number): string {
     }
   }
 }
+
+const PATH_CLASSES = [
+  "fill-[var(--attribute-fill)]",
+  "stroke-[var(--attribute-color)]",
+  "stroke-2",
+].join(" ");
+
+export function renderShape(
+  shape: Shape,
+  svgs: SVGSVGElement[],
+): SVGSVGElement[] {
+  return svgs.map((svg) => {
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", shapePath(shape, 80, 80));
+    path.setAttribute("class", PATH_CLASSES);
+    svg.appendChild(path);
+    return svg;
+  });
+}

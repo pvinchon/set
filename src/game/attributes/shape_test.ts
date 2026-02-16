@@ -33,3 +33,103 @@ Deno.test("shapePath values are valid SVG paths", () => {
     assertEquals(pathCommandPattern.test(shapePath(shape, 100, 100)), true);
   }
 });
+
+// renderShape tests
+
+function createMockSVG(): {
+  children: {
+    setAttribute: (name: string, value: string) => void;
+    style: Record<string, string>;
+    tagName: string;
+    d?: string;
+  }[];
+  appendChild: (child: unknown) => void;
+} {
+  const svg: ReturnType<typeof createMockSVG> = {
+    children: [],
+    appendChild(child: unknown) {
+      svg.children.push(child as typeof svg.children[0]);
+    },
+  };
+  return svg;
+}
+
+function createMockPath(): {
+  attributes: Record<string, string>;
+  style: Record<string, string>;
+  setAttribute: (name: string, value: string) => void;
+} {
+  const path: ReturnType<typeof createMockPath> = {
+    attributes: {},
+    style: {},
+    setAttribute(name: string, value: string) {
+      path.attributes[name] = value;
+    },
+  };
+  return path;
+}
+
+Deno.test("renderShape appends a child to each SVG", () => {
+  const mockPath = createMockPath();
+  const originalCreateElementNS = globalThis.document?.createElementNS;
+  // deno-lint-ignore no-explicit-any
+  (globalThis as any).document = {
+    createElementNS(_ns: string, _tag: string) {
+      return mockPath;
+    },
+  };
+
+  try {
+    const mock = createMockSVG();
+    const result = renderShape(Shape.A, [mock as unknown as SVGSVGElement]);
+
+    assertEquals(result.length, 1);
+    assertEquals(mock.children.length, 1);
+    assertStringIncludes(mockPath.attributes["d"], "A");
+    assertStringIncludes(
+      mockPath.attributes["class"],
+      "fill-[var(--attribute-fill)]",
+    );
+    assertStringIncludes(
+      mockPath.attributes["class"],
+      "stroke-[var(--attribute-color)]",
+    );
+    assertStringIncludes(mockPath.attributes["class"], "stroke-2");
+  } finally {
+    if (originalCreateElementNS) {
+      // deno-lint-ignore no-explicit-any
+      (globalThis as any).document.createElementNS = originalCreateElementNS;
+    } else {
+      // deno-lint-ignore no-explicit-any
+      delete (globalThis as any).document;
+    }
+  }
+});
+
+Deno.test("renderShape applies to all SVGs in array", () => {
+  const paths: ReturnType<typeof createMockPath>[] = [];
+  // deno-lint-ignore no-explicit-any
+  (globalThis as any).document = {
+    createElementNS(_ns: string, _tag: string) {
+      const p = createMockPath();
+      paths.push(p);
+      return p;
+    },
+  };
+
+  try {
+    const mock1 = createMockSVG();
+    const mock2 = createMockSVG();
+    renderShape(Shape.B, [
+      mock1 as unknown as SVGSVGElement,
+      mock2 as unknown as SVGSVGElement,
+    ]);
+
+    assertEquals(mock1.children.length, 1);
+    assertEquals(mock2.children.length, 1);
+    assertEquals(paths.length, 2);
+  } finally {
+    // deno-lint-ignore no-explicit-any
+    delete (globalThis as any).document;
+  }
+});

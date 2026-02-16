@@ -7,31 +7,32 @@ export enum Shading {
   C = 2,
 }
 
-export interface ShadingStyle {
-  fill: string;
-  stroke: string;
-  defs?: string;
-}
-
-export function getShadingStyle(
+export function renderShading(
   shading: Shading,
-  color: string,
-  patternId: string,
-): ShadingStyle {
-  switch (shading) {
-    case Shading.A: // solid
-      return { fill: color, stroke: color };
-    case Shading.B: // striped
-      return {
-        fill: `url(#${patternId})`,
-        stroke: color,
-        defs: `<defs>
-          <pattern id="${patternId}" patternUnits="userSpaceOnUse" width="4" height="4">
-            <line x1="0" y1="0" x2="0" y2="4" stroke="${color}" stroke-width="2"/>
-          </pattern>
-        </defs>`,
-      };
-    case Shading.C: // open
-      return { fill: "none", stroke: color };
-  }
+  svgs: SVGSVGElement[],
+): SVGSVGElement[] {
+  return svgs.map((svg) => {
+    switch (shading) {
+      case Shading.A: // solid
+        svg.style.setProperty("--attribute-fill", "var(--attribute-color)");
+        break;
+      case Shading.B: { // striped
+        const patternId = `stripe-${crypto.randomUUID().slice(0, 8)}`;
+        svg.insertAdjacentHTML(
+          "afterbegin",
+          `<defs>
+            <pattern id="${patternId}" patternUnits="userSpaceOnUse" width="8" height="8">
+              <line x1="0" y1="0" x2="0" y2="8" stroke="var(--attribute-color)" stroke-width="4"/>
+            </pattern>
+          </defs>`,
+        );
+        svg.style.setProperty("--attribute-fill", `url(#${patternId})`);
+        break;
+      }
+      case Shading.C: // open
+        svg.style.setProperty("--attribute-fill", "none");
+        break;
+    }
+    return svg;
+  });
 }

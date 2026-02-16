@@ -19,13 +19,11 @@ export function initGame(container: HTMLElement): void {
     state = result.state;
 
     if (result.type === "valid_set") {
-      // Flash green feedback
-      container.classList.add("feedback-valid");
-      setTimeout(() => container.classList.remove("feedback-valid"), 300);
+      container.dataset.feedback = "valid";
+      setTimeout(() => delete container.dataset.feedback, 300);
     } else if (result.type === "invalid_set") {
-      // Flash red feedback
-      container.classList.add("feedback-invalid");
-      setTimeout(() => container.classList.remove("feedback-invalid"), 300);
+      container.dataset.feedback = "invalid";
+      setTimeout(() => delete container.dataset.feedback, 300);
     }
 
     render();

@@ -10,8 +10,9 @@ export function renderGame(
 
   state.board.cards.forEach((card, index) => {
     const isSelected = state.selection.indices.includes(index);
-    const cardEl = renderCard(card, index, isSelected);
+    const cardEl = renderCard(card, isSelected);
 
+    cardEl.dataset.index = String(index);
     cardEl.addEventListener("click", () => onCardClick(index));
     container.appendChild(cardEl);
   });

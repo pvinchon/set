@@ -26,3 +26,57 @@ Deno.test("COLOR_HEX values are valid hex colors", () => {
     assertEquals(hexPattern.test(COLOR_HEX[color]), true);
   }
 });
+
+// renderColor tests
+
+function createMockSVG(): {
+  style: {
+    setProperty: (name: string, value: string) => void;
+    props: Record<string, string>;
+  };
+} {
+  const props: Record<string, string> = {};
+  return {
+    style: {
+      props,
+      setProperty(name: string, value: string) {
+        props[name] = value;
+      },
+    },
+  };
+}
+
+Deno.test("renderColor sets --attribute-color to red for Color.A", () => {
+  const mock = createMockSVG();
+  const result = renderColor(Color.A, [mock as unknown as SVGSVGElement]);
+
+  assertEquals(result.length, 1);
+  assertEquals(mock.style.props["--attribute-color"], "#ff0000");
+});
+
+Deno.test("renderColor sets --attribute-color to green for Color.B", () => {
+  const mock = createMockSVG();
+  renderColor(Color.B, [mock as unknown as SVGSVGElement]);
+
+  assertEquals(mock.style.props["--attribute-color"], "#00ff00");
+});
+
+Deno.test("renderColor sets --attribute-color to blue for Color.C", () => {
+  const mock = createMockSVG();
+  renderColor(Color.C, [mock as unknown as SVGSVGElement]);
+
+  assertEquals(mock.style.props["--attribute-color"], "#0000ff");
+});
+
+Deno.test("renderColor applies to all SVGs in array", () => {
+  const mock1 = createMockSVG();
+  const mock2 = createMockSVG();
+  const result = renderColor(Color.A, [
+    mock1 as unknown as SVGSVGElement,
+    mock2 as unknown as SVGSVGElement,
+  ]);
+
+  assertEquals(result.length, 2);
+  assertEquals(mock1.style.props["--attribute-color"], "#ff0000");
+  assertEquals(mock2.style.props["--attribute-color"], "#ff0000");
+});
