@@ -7,9 +7,33 @@ export enum Shape {
   C = 2,
 }
 
-// Shape paths (viewBox 0 0 40 80)
-export const SHAPE_PATH: Record<Shape, string> = {
-  [Shape.A]: "M20 40 A20 20 0 1 1 20 40.1", // circle
-  [Shape.B]: "M6 12 L34 12 L34 68 L6 68 Z", // square
-  [Shape.C]: "M20 8 L36 72 L4 72 Z", // triangle
-};
+// Shape path generator - shapes fill square viewport
+export function shapePath(shape: Shape, width: number, height: number): string {
+  const cx = width / 2;
+  const cy = height / 2;
+  const size = Math.min(width, height);
+
+  switch (shape) {
+    case Shape.A: {
+      // Circle: center at viewport center, diameter = viewport size
+      const r = size / 2;
+      return [
+        `M ${cx} ${cy - r}`,
+        `A ${r} ${r} 0 1 1 ${cx} ${cy + r}`,
+        `A ${r} ${r} 0 1 1 ${cx} ${cy - r}`,
+      ].join(" ");
+    }
+    case Shape.B:
+      // Square: fills entire viewport
+      return `M 0 0 L ${width} 0 L ${width} ${height} L 0 ${height} Z`;
+    case Shape.C: {
+      // Equilateral triangle: bounding box centered in viewport, base = size
+      const h = size * Math.sqrt(3) / 2;
+      const top = cy - h / 2;
+      const bottom = cy + h / 2;
+      const left = cx - size / 2;
+      const right = cx + size / 2;
+      return `M ${cx} ${top} L ${right} ${bottom} L ${left} ${bottom} Z`;
+    }
+  }
+}
