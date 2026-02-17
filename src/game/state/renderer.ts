@@ -1,6 +1,7 @@
 import type { GameState } from "@/game/state/model.ts";
 import { cardEquals, renderCard } from "@/game/card/mod.ts";
 import type { Card } from "@/game/card/mod.ts";
+import { rand, randSign } from "@/utils/random.ts";
 
 export interface RenderOptions {
   /** CSS animation class to apply to affected cards */
@@ -9,6 +10,69 @@ export interface RenderOptions {
   affectedIndices?: number[];
   /** Whether this is the initial deal (stagger entrance animation) */
   initialDeal?: boolean;
+}
+
+/** Per-animation-type randomization: plain random ranges with explicit base + variance. */
+const ANIM_RANDOMIZERS: Record<string, (el: HTMLElement) => void> = {
+  "animate-deal-in": (el) => {
+    const baseDuration = 450, variance = 50; // ms
+    el.style.setProperty("--anim-rotate", `${rand(-10, 10).toFixed(1)}deg`);
+    el.style.animationDuration = `${
+      Math.round(baseDuration + rand(-variance, variance))
+    }ms`;
+  },
+  "animate-card-exit": (el) => {
+    const baseDuration = 350, variance = 50;
+    el.style.setProperty("--anim-rotate", `${rand(-15, 15).toFixed(1)}deg`);
+    el.style.animationDuration = `${
+      Math.round(baseDuration + rand(-variance, variance))
+    }ms`;
+  },
+  "animate-card-enter": (el) => {
+    const baseDuration = 400, variance = 50;
+    el.style.setProperty("--anim-rotate", `${rand(-8, 8).toFixed(1)}deg`);
+    el.style.animationDuration = `${
+      Math.round(baseDuration + rand(-variance, variance))
+    }ms`;
+  },
+  "animate-set-pulse": (el) => {
+    const baseDuration = 600, variance = 50;
+    el.style.setProperty("--anim-rotate", `${rand(-3, 3).toFixed(1)}deg`);
+    el.style.animationDuration = `${
+      Math.round(baseDuration + rand(-variance, variance))
+    }ms`;
+  },
+  "animate-shake": (el) => {
+    const baseDuration = 600, variance = 50;
+    el.style.setProperty("--anim-dir", `${randSign()}`);
+    el.style.animationDuration = `${
+      Math.round(baseDuration + rand(-variance, variance))
+    }ms`;
+  },
+};
+
+/** Apply animation class with per-element randomness. */
+function applyAnimation(el: HTMLElement, animClass: string): void {
+  el.classList.add(animClass);
+  ANIM_RANDOMIZERS[animClass]?.(el);
+}
+
+/** Remove all animation classes and custom properties. */
+function clearAnimation(el: HTMLElement): void {
+  el.classList.remove(
+    "animate-deal-in",
+    "animate-card-exit",
+    "animate-card-enter",
+    "animate-set-pulse",
+    "animate-shake",
+  );
+  el.style.removeProperty("animation-delay");
+  el.style.removeProperty("animation-duration");
+  el.style.removeProperty("opacity");
+  el.style.removeProperty("--anim-y");
+  el.style.removeProperty("--anim-rotate");
+  el.style.removeProperty("--anim-bounce");
+  el.style.removeProperty("--anim-dir");
 }
 
 /**
@@ -39,8 +103,10 @@ export function renderGame(
 
       if (options.initialDeal) {
         cardEl.style.opacity = "0";
-        cardEl.classList.add("animate-deal-in");
-        cardEl.style.animationDelay = `${index * 100}ms`;
+        applyAnimation(cardEl, "animate-deal-in");
+        // Stagger with slight per-card jitter (±15ms)
+        const jitter = Math.round(rand(-15, 15));
+        cardEl.style.animationDelay = `${index * 80 + jitter}ms`;
       }
 
       container.appendChild(cardEl);
@@ -69,32 +135,24 @@ export function renderGame(
       while (newCardEl.firstChild) {
         cardEl.appendChild(newCardEl.firstChild);
       }
-
-      // Apply animation class if this index is in the affected set
-      if (
-        options.animationClass &&
-        options.affectedIndices?.includes(index)
-      ) {
-        cardEl.classList.add(options.animationClass);
-      }
     } else {
       // Same card — just update selection classes
       const newCardEl = renderCard(card, isSelected);
       cardEl.className = newCardEl.className;
     }
 
+    // Apply animation class if this index is in the affected set
+    if (
+      options.animationClass &&
+      options.affectedIndices?.includes(index)
+    ) {
+      applyAnimation(cardEl, options.animationClass);
+    }
+
     // Clean up any stale animation classes from previous renders
     // (but keep currently-applied animation classes from options)
     if (!options.animationClass || !options.affectedIndices?.includes(index)) {
-      cardEl.classList.remove(
-        "animate-deal-in",
-        "animate-card-exit",
-        "animate-card-enter",
-        "animate-set-pulse",
-        "animate-shake",
-      );
-      cardEl.style.removeProperty("animation-delay");
-      cardEl.style.removeProperty("opacity");
+      clearAnimation(cardEl);
     }
   });
 

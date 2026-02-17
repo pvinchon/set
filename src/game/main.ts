@@ -18,7 +18,7 @@ interface AnimationState {
   phase: AnimationPhase;
 }
 
-export function initGame(container: HTMLElement): void {
+function initGame(container: HTMLElement): void {
   const deck = createDeck();
   let state: GameState = generateInitialState(deck);
   const animation: AnimationState = { phase: "idle" };
@@ -53,21 +53,28 @@ export function initGame(container: HTMLElement): void {
         affectedIndices: selectedIndices,
       });
 
-      // Apply green feedback classes directly to the affected card elements
+      // Apply green feedback to the affected card elements
       for (const i of selectedIndices) {
         const cardEl = container.children[i] as HTMLElement;
         if (cardEl) {
-          cardEl.classList.remove("border-blue-500", "ring-blue-500/30");
+          cardEl.classList.remove(
+            "border-blue-500",
+            "border-[3px]",
+            "ring-blue-500/30",
+            "shadow-blue-500/25",
+          );
           cardEl.classList.add(
-            "border-green-600",
-            "ring-3",
-            "ring-green-600/40",
+            "border-green-500",
+            "border-[3px]",
+            "ring-4",
+            "ring-green-500/40",
+            "shadow-green-500/30",
           );
         }
       }
 
       setTimeout(() => {
-        // Step 2: Exit animation on the 3 cards (300ms)
+        // Step 2: Exit — cards fly up and out with rotation (350ms)
         animation.phase = "valid-exit";
         render({
           animationClass: "animate-card-exit",
@@ -75,7 +82,7 @@ export function initGame(container: HTMLElement): void {
         });
 
         setTimeout(() => {
-          // Step 3: Apply new state and enter animation (300ms)
+          // Step 3: New cards drop in with bounce (400ms)
           animation.phase = "valid-enter";
           state = result.state;
           render({
@@ -87,9 +94,9 @@ export function initGame(container: HTMLElement): void {
             // Step 4: Clean up and return to idle
             animation.phase = "idle";
             render();
-          }, 300);
-        }, 300);
-      }, 500);
+          }, 400);
+        }, 350);
+      }, 600);
     } else if (result.type === "invalid_set") {
       // --- Invalid set animation sequence ---
       const selectedIndices = [...previousState.selection.indices, index];
@@ -108,15 +115,22 @@ export function initGame(container: HTMLElement): void {
         affectedIndices: selectedIndices,
       });
 
-      // Apply red feedback classes directly to the affected card elements
+      // Apply red rejection feedback
       for (const i of selectedIndices) {
         const cardEl = container.children[i] as HTMLElement;
         if (cardEl) {
-          cardEl.classList.remove("border-blue-500", "ring-blue-500/30");
+          cardEl.classList.remove(
+            "border-blue-500",
+            "border-[3px]",
+            "ring-blue-500/30",
+            "shadow-blue-500/25",
+          );
           cardEl.classList.add(
-            "border-red-600",
-            "ring-3",
-            "ring-red-600/40",
+            "border-red-500",
+            "border-[3px]",
+            "ring-4",
+            "ring-red-500/40",
+            "shadow-red-500/30",
           );
         }
       }
@@ -126,7 +140,7 @@ export function initGame(container: HTMLElement): void {
         animation.phase = "idle";
         state = result.state;
         render();
-      }, 500);
+      }, 600);
     } else {
       // Simple selection toggle — no animation blocking
       state = result.state;
@@ -134,12 +148,12 @@ export function initGame(container: HTMLElement): void {
     }
   }
 
-  // Initial deal with staggered entrance
+  // Initial deal — staggered fly-in from below
   animation.phase = "dealing";
   render({ initialDeal: true });
 
-  // Calculate total deal time: 12 cards × 100ms stagger + 300ms animation
-  const dealDuration = state.board.cards.length * 100 + 300;
+  // Deal time: 12 cards × 80ms stagger + 450ms final card animation
+  const dealDuration = state.board.cards.length * 80 + 450;
   setTimeout(() => {
     animation.phase = "idle";
     render();
