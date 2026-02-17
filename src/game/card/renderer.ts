@@ -44,6 +44,11 @@ const SVG_CLASSES = [
   "h-10",
 ].join(" ");
 
+/** Compute card className without creating a DOM element. */
+export function cardClassName(selected = false): string {
+  return cx(CARD_BASE_CLASSES, selected && SELECTED_CLASSES);
+}
+
 function createBaseSVG(): SVGSVGElement {
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   svg.setAttribute("class", SVG_CLASSES);
@@ -53,7 +58,7 @@ function createBaseSVG(): SVGSVGElement {
 
 export function renderCard(card: Card, selected = false): HTMLElement {
   const el = document.createElement("div");
-  el.className = cx(CARD_BASE_CLASSES, selected && SELECTED_CLASSES);
+  el.className = cardClassName(selected);
 
   // Randomized hover: each mouseenter picks slightly different lift/tilt/scale
   el.addEventListener("mouseenter", () => {

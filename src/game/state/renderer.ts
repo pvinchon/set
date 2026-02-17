@@ -1,7 +1,19 @@
 import type { GameState } from "@/game/state/model.ts";
 import { cardEquals, renderCard } from "@/game/card/mod.ts";
 import type { Card } from "@/game/card/mod.ts";
-import { rand, randSign } from "@/utils/random.ts";
+import { rand } from "@/utils/random.ts";
+import { cardClassName } from "@/game/card/mod.ts";
+
+/** Centralized animation durations (ms) used by both randomizers and orchestration. */
+export const ANIM_DURATIONS = {
+  dealIn: 450,
+  setPulse: 600,
+  cardExit: 350,
+  cardEnter: 400,
+  shake: 600,
+  stagger: 80,
+  jitter: 50,
+} as const;
 
 export interface RenderOptions {
   /** CSS animation class to apply to affected cards */
@@ -12,41 +24,35 @@ export interface RenderOptions {
   initialDeal?: boolean;
 }
 
-/** Per-animation-type randomization: plain random ranges with explicit base + variance. */
+/** Create a randomizer that jitters rotation and duration per element. */
+function rotateRandomizer(
+  rotateRange: number,
+  baseDuration: number,
+  variance = 50,
+): (el: HTMLElement) => void {
+  return (el) => {
+    el.style.setProperty(
+      "--anim-rotate",
+      `${rand(-rotateRange, rotateRange).toFixed(1)}deg`,
+    );
+    el.style.animationDuration = `${
+      Math.round(baseDuration + rand(-variance, variance))
+    }ms`;
+  };
+}
+
+/** Per-animation-type randomization. */
 const ANIM_RANDOMIZERS: Record<string, (el: HTMLElement) => void> = {
-  "animate-deal-in": (el) => {
-    const baseDuration = 450, variance = 50; // ms
-    el.style.setProperty("--anim-rotate", `${rand(-10, 10).toFixed(1)}deg`);
-    el.style.animationDuration = `${
-      Math.round(baseDuration + rand(-variance, variance))
-    }ms`;
-  },
-  "animate-card-exit": (el) => {
-    const baseDuration = 350, variance = 50;
-    el.style.setProperty("--anim-rotate", `${rand(-15, 15).toFixed(1)}deg`);
-    el.style.animationDuration = `${
-      Math.round(baseDuration + rand(-variance, variance))
-    }ms`;
-  },
-  "animate-card-enter": (el) => {
-    const baseDuration = 400, variance = 50;
-    el.style.setProperty("--anim-rotate", `${rand(-8, 8).toFixed(1)}deg`);
-    el.style.animationDuration = `${
-      Math.round(baseDuration + rand(-variance, variance))
-    }ms`;
-  },
-  "animate-set-pulse": (el) => {
-    const baseDuration = 600, variance = 50;
-    el.style.setProperty("--anim-rotate", `${rand(-3, 3).toFixed(1)}deg`);
-    el.style.animationDuration = `${
-      Math.round(baseDuration + rand(-variance, variance))
-    }ms`;
-  },
+  "animate-deal-in": rotateRandomizer(10, ANIM_DURATIONS.dealIn),
+  "animate-card-exit": rotateRandomizer(15, ANIM_DURATIONS.cardExit),
+  "animate-card-enter": rotateRandomizer(8, ANIM_DURATIONS.cardEnter),
+  "animate-set-pulse": rotateRandomizer(3, ANIM_DURATIONS.setPulse),
   "animate-shake": (el) => {
-    const baseDuration = 600, variance = 50;
-    el.style.setProperty("--anim-dir", `${randSign()}`);
     el.style.animationDuration = `${
-      Math.round(baseDuration + rand(-variance, variance))
+      Math.round(
+        ANIM_DURATIONS.shake +
+          rand(-ANIM_DURATIONS.jitter, ANIM_DURATIONS.jitter),
+      )
     }ms`;
   },
 };
@@ -69,10 +75,7 @@ function clearAnimation(el: HTMLElement): void {
   el.style.removeProperty("animation-delay");
   el.style.removeProperty("animation-duration");
   el.style.removeProperty("opacity");
-  el.style.removeProperty("--anim-y");
   el.style.removeProperty("--anim-rotate");
-  el.style.removeProperty("--anim-bounce");
-  el.style.removeProperty("--anim-dir");
 }
 
 /**
@@ -106,7 +109,9 @@ export function renderGame(
         applyAnimation(cardEl, "animate-deal-in");
         // Stagger with slight per-card jitter (±15ms)
         const jitter = Math.round(rand(-15, 15));
-        cardEl.style.animationDelay = `${index * 80 + jitter}ms`;
+        cardEl.style.animationDelay = `${
+          index * ANIM_DURATIONS.stagger + jitter
+        }ms`;
       }
 
       container.appendChild(cardEl);
@@ -137,8 +142,7 @@ export function renderGame(
       }
     } else {
       // Same card — just update selection classes
-      const newCardEl = renderCard(card, isSelected);
-      cardEl.className = newCardEl.className;
+      cardEl.className = cardClassName(isSelected);
     }
 
     // Apply animation class if this index is in the affected set

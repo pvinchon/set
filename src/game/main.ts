@@ -1,5 +1,6 @@
 import { createDeck } from "@/game/deck/mod.ts";
 import {
+  ANIM_DURATIONS,
   generateInitialState,
   renderGame,
   selectCard,
@@ -16,6 +17,41 @@ type AnimationPhase =
 
 interface AnimationState {
   phase: AnimationPhase;
+}
+
+function withFullSelection(
+  previousState: GameState,
+  selectedIndices: number[],
+): GameState {
+  return {
+    ...previousState,
+    selection: { ...previousState.selection, indices: selectedIndices },
+  };
+}
+
+function applyFeedbackColor(
+  container: HTMLElement,
+  indices: number[],
+  color: "green" | "red",
+): void {
+  for (const i of indices) {
+    const cardEl = container.children[i] as HTMLElement;
+    if (cardEl) {
+      cardEl.classList.remove(
+        "border-blue-500",
+        "border-[3px]",
+        "ring-blue-500/30",
+        "shadow-blue-500/25",
+      );
+      cardEl.classList.add(
+        "border-[3px]",
+        "ring-4",
+        color === "green" ? "border-green-500" : "border-red-500",
+        color === "green" ? "ring-green-500/40" : "ring-red-500/40",
+        color === "green" ? "shadow-green-500/30" : "shadow-red-500/30",
+      );
+    }
+  }
 }
 
 function initGame(container: HTMLElement): void {
@@ -39,68 +75,25 @@ function initGame(container: HTMLElement): void {
       const selectedIndices = [...previousState.selection.indices, index];
       animation.phase = "valid-pulse";
 
-      // Step 1: Pulse animation on the 3 selected cards (500ms)
-      // Re-render with old state + pulse class before applying new state
-      state = {
-        ...previousState,
-        selection: {
-          ...previousState.selection,
-          indices: selectedIndices,
-        },
-      };
+      // Step 1: Pulse animation on the 3 selected cards (600ms)
+      state = withFullSelection(previousState, selectedIndices);
       render({
         animationClass: "animate-set-pulse",
         affectedIndices: selectedIndices,
       });
-
-      // Apply green feedback to the affected card elements
-      for (const i of selectedIndices) {
-        const cardEl = container.children[i] as HTMLElement;
-        if (cardEl) {
-          cardEl.classList.remove(
-            "border-blue-500",
-            "border-[3px]",
-            "ring-blue-500/30",
-            "shadow-blue-500/25",
-          );
-          cardEl.classList.add(
-            "border-green-500",
-            "border-[3px]",
-            "ring-4",
-            "ring-green-500/40",
-            "shadow-green-500/30",
-          );
-        }
-      }
+      applyFeedbackColor(container, selectedIndices, "green");
 
       setTimeout(() => {
-        // Step 2: Exit — cards fly up and out with rotation (350ms)
+        // Step 2: Exit — cards fly up and out with rotation
         animation.phase = "valid-exit";
         render({
           animationClass: "animate-card-exit",
           affectedIndices: selectedIndices,
         });
-
-        // Re-apply green feedback (render resets to blue selection classes)
-        for (const i of selectedIndices) {
-          const cardEl = container.children[i] as HTMLElement;
-          if (cardEl) {
-            cardEl.classList.remove(
-              "border-blue-500",
-              "ring-blue-500/30",
-              "shadow-blue-500/25",
-            );
-            cardEl.classList.add(
-              "border-green-500",
-              "ring-4",
-              "ring-green-500/40",
-              "shadow-green-500/30",
-            );
-          }
-        }
+        applyFeedbackColor(container, selectedIndices, "green");
 
         setTimeout(() => {
-          // Step 3: New cards drop in with bounce (400ms)
+          // Step 3: New cards drop in with bounce
           animation.phase = "valid-enter";
           state = result.state;
           render({
@@ -112,53 +105,26 @@ function initGame(container: HTMLElement): void {
             // Step 4: Clean up and return to idle
             animation.phase = "idle";
             render();
-          }, 400);
-        }, 350);
-      }, 600);
+          }, ANIM_DURATIONS.cardEnter);
+        }, ANIM_DURATIONS.cardExit);
+      }, ANIM_DURATIONS.setPulse);
     } else if (result.type === "invalid_set") {
       // --- Invalid set animation sequence ---
       const selectedIndices = [...previousState.selection.indices, index];
       animation.phase = "invalid-shake";
 
-      // Render with all 3 cards selected + shake
-      state = {
-        ...previousState,
-        selection: {
-          ...previousState.selection,
-          indices: selectedIndices,
-        },
-      };
+      state = withFullSelection(previousState, selectedIndices);
       render({
         animationClass: "animate-shake",
         affectedIndices: selectedIndices,
       });
-
-      // Apply red rejection feedback
-      for (const i of selectedIndices) {
-        const cardEl = container.children[i] as HTMLElement;
-        if (cardEl) {
-          cardEl.classList.remove(
-            "border-blue-500",
-            "border-[3px]",
-            "ring-blue-500/30",
-            "shadow-blue-500/25",
-          );
-          cardEl.classList.add(
-            "border-red-500",
-            "border-[3px]",
-            "ring-4",
-            "ring-red-500/40",
-            "shadow-red-500/30",
-          );
-        }
-      }
+      applyFeedbackColor(container, selectedIndices, "red");
 
       setTimeout(() => {
-        // Apply deselected state and return to idle
         animation.phase = "idle";
         state = result.state;
         render();
-      }, 600);
+      }, ANIM_DURATIONS.shake);
     } else {
       // Simple selection toggle — no animation blocking
       state = result.state;
@@ -170,8 +136,8 @@ function initGame(container: HTMLElement): void {
   animation.phase = "dealing";
   render({ initialDeal: true });
 
-  // Deal time: 12 cards × 80ms stagger + 450ms final card animation
-  const dealDuration = state.board.cards.length * 80 + 450;
+  const dealDuration = state.board.cards.length * ANIM_DURATIONS.stagger +
+    ANIM_DURATIONS.dealIn;
   setTimeout(() => {
     animation.phase = "idle";
     render();
