@@ -81,6 +81,24 @@ function initGame(container: HTMLElement): void {
           affectedIndices: selectedIndices,
         });
 
+        // Re-apply green feedback (render resets to blue selection classes)
+        for (const i of selectedIndices) {
+          const cardEl = container.children[i] as HTMLElement;
+          if (cardEl) {
+            cardEl.classList.remove(
+              "border-blue-500",
+              "ring-blue-500/30",
+              "shadow-blue-500/25",
+            );
+            cardEl.classList.add(
+              "border-green-500",
+              "ring-4",
+              "ring-green-500/40",
+              "shadow-green-500/30",
+            );
+          }
+        }
+
         setTimeout(() => {
           // Step 3: New cards drop in with bounce (400ms)
           animation.phase = "valid-enter";
