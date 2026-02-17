@@ -21,21 +21,19 @@ const CARD_BASE_CLASSES = [
   "gap-1",
   "p-2",
   "transition-all",
-  "duration-150",
+  "duration-300",
   "ease-in-out",
-  "hover:-translate-y-0.5",
+  "hover:-translate-y-1",
   "hover:shadow-lg",
+  "active:translate-y-0",
+  "active:shadow-md",
+  "active:scale-95",
 ].join(" ");
 
 const SELECTED_CLASSES = [
   "border-blue-500",
   "ring-3",
   "ring-blue-500/30",
-  "group-data-[feedback=valid]:border-green-600",
-  "group-data-[feedback=valid]:ring-green-600/40",
-  "group-data-[feedback=invalid]:border-red-600",
-  "group-data-[feedback=invalid]:ring-red-600/40",
-  "group-data-[feedback=invalid]:animate-shake",
 ].join(" ");
 
 const SVG_CLASSES = [
