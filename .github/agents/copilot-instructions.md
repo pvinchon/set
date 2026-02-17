@@ -9,6 +9,7 @@ Auto-generated from all feature plans. Last updated: 2026-02-11
 - N/A -- no persistence; game state is in-memory only (003-set-card-game)
 - TypeScript (Deno latest stable) + Lume (static site generator), Tailwind CSS, esbuild plugin (003-set-card-game)
 - N/A (in-memory only, no persistence) (003-set-card-game)
+- TypeScript (Deno latest stable) + Tailwind CSS v4 (via Lume plugin), Lume v3.2.1, esbuild (004-board-animations)
 
 - TypeScript (Deno latest stable) for build configuration; HTML + CSS for markup and styling + Lume (Deno-native static site generator), Tailwind CSS (via Lume plugin) (001-hello-world-website)
 
@@ -28,9 +29,9 @@ npm test && npm run lint
 TypeScript (Deno latest stable) for build configuration; HTML + CSS for markup and styling: Follow standard conventions
 
 ## Recent Changes
+- 004-board-animations: Added TypeScript (Deno latest stable) + Tailwind CSS v4 (via Lume plugin), Lume v3.2.1, esbuild
+- 004-board-animations: Added [if applicable, e.g., PostgreSQL, CoreData, files or N/A]
 - 003-set-card-game: Added TypeScript (Deno latest stable) + Lume (static site generator), Tailwind CSS, esbuild plugin
-- 003-set-card-game: Added TypeScript (Deno latest stable) for game logic and build; vanilla JavaScript for browser runtime + Lume 3.2.1 (static site generator), Tailwind CSS (styling), no new dependencies
-- 002-offline-support: Added TypeScript (Deno latest stable) for build config; vanilla JavaScript for the Service Worker (runs in the browser, not Deno) + Lume 3.2.1 (static site generator), Tailwind CSS (styling), no new dependencies
 
 
 <!-- MANUAL ADDITIONS START -->
