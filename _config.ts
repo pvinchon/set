@@ -3,8 +3,11 @@ import basePath from "lume/plugins/base_path.ts";
 import tailwindcss from "lume/plugins/tailwindcss.ts";
 import esbuild from "lume/plugins/esbuild.ts";
 import pwa from "./src/pwa/plugin.ts";
+import { isProduction } from "@/utils/environment.ts";
 
 const site = lume({ src: "./src" });
+
+site.data("isProduction", isProduction);
 
 site.use(esbuild({
   extensions: [".ts"],

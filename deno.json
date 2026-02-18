@@ -5,11 +5,11 @@
   },
   "tasks": {
     "lume": "deno run -P=lume lume/cli.ts",
-    "build": "deno task lume",
-    "serve": "deno task lume -s",
+    "build": "ENV=PROD deno task lume",
+    "serve": "ENV=DEV deno task lume -s",
     "fmt": "deno fmt",
     "lint": "deno lint",
-    "test": "deno test -A"
+    "test": "ENV=TEST deno test -A"
   },
   "unstable": ["temporal"],
   "lock": false,
