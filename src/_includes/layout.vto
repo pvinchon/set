@@ -11,6 +11,8 @@
   </head>
   <body>
     {{ content }}
-    <script>if("serviceWorker"in navigator){navigator.serviceWorker.register("{{ "/service_worker.js" |> url }}")}</script>
+    {{ if isProduction }}
+      <script>if("serviceWorker"in navigator){navigator.serviceWorker.register("{{ "/service_worker.js" |> url }}")}</script>
+    {{ /if }}
   </body>
 </html>
