@@ -19,10 +19,7 @@ site.use(esbuild({
 }));
 site.use(tailwindcss({ minify: true }));
 site.use(basePath());
-
-if (isProduction) {
-  site.use(pwa());
-}
+site.use(pwa());
 
 site.add("style.css");
 site.add("game/main.ts", "game/main.js");
