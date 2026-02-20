@@ -103,6 +103,15 @@ function createBaseSVG(): SVGSVGElement {
   return svg;
 }
 
+function restoreTransform(el: HTMLElement, index: number): void {
+  if (el.dataset.selected) {
+    const idx = Number(el.dataset.index ?? index);
+    applySelectionTransform(el, idx, true);
+  } else {
+    el.style.removeProperty("transform");
+  }
+}
+
 export function renderCard(
   card: Card,
   selected = false,
@@ -135,16 +144,14 @@ export function renderCard(
   el.addEventListener("pointerdown", (e: PointerEvent) => {
     el.style.transform =
       `translateY(${SEL.pressDownTranslateYPx}px) scale(${SEL.pressDownScale})`;
-    if (e.pointerType === "touch") {
+    try {
       el.setPointerCapture(e.pointerId);
+    } catch {
+      // Ignore errors from setPointerCapture (e.g., unsupported environments).
     }
   });
-  el.addEventListener("pointerup", () => {
-    el.style.removeProperty("transform");
-  });
-  el.addEventListener("pointercancel", () => {
-    el.style.removeProperty("transform");
-  });
+  el.addEventListener("pointerup", () => restoreTransform(el, index));
+  el.addEventListener("pointercancel", () => restoreTransform(el, index));
 
   let svgs: SVGSVGElement[] = [createBaseSVG()];
   svgs = renderShape(card.shape, svgs);
