@@ -103,6 +103,15 @@ function createBaseSVG(): SVGSVGElement {
   return svg;
 }
 
+function restoreTransform(el: HTMLElement, index: number): void {
+  if (el.dataset.selected) {
+    const idx = Number(el.dataset.index ?? index);
+    applySelectionTransform(el, idx, true);
+  } else {
+    el.style.removeProperty("transform");
+  }
+}
+
 export function renderCard(
   card: Card,
   selected = false,
@@ -141,22 +150,8 @@ export function renderCard(
       // Ignore errors from setPointerCapture (e.g., unsupported environments).
     }
   });
-  el.addEventListener("pointerup", () => {
-    if (el.dataset.selected) {
-      const idx = Number(el.dataset.index ?? index);
-      applySelectionTransform(el, idx, true);
-    } else {
-      el.style.removeProperty("transform");
-    }
-  });
-  el.addEventListener("pointercancel", () => {
-    if (el.dataset.selected) {
-      const idx = Number(el.dataset.index ?? index);
-      applySelectionTransform(el, idx, true);
-    } else {
-      el.style.removeProperty("transform");
-    }
-  });
+  el.addEventListener("pointerup", () => restoreTransform(el, index));
+  el.addEventListener("pointercancel", () => restoreTransform(el, index));
 
   let svgs: SVGSVGElement[] = [createBaseSVG()];
   svgs = renderShape(card.shape, svgs);
