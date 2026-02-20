@@ -29,31 +29,6 @@ function withFullSelection(
   };
 }
 
-function applyFeedbackColor(
-  container: HTMLElement,
-  indices: number[],
-  color: "green" | "red",
-): void {
-  for (const i of indices) {
-    const cardEl = container.children[i] as HTMLElement;
-    if (cardEl) {
-      cardEl.classList.remove(
-        "border-blue-500",
-        "border-[3px]",
-        "ring-blue-500/30",
-        "shadow-blue-500/25",
-      );
-      cardEl.classList.add(
-        "border-[3px]",
-        "ring-4",
-        color === "green" ? "border-green-500" : "border-red-500",
-        color === "green" ? "ring-green-500/40" : "ring-red-500/40",
-        color === "green" ? "shadow-green-500/30" : "shadow-red-500/30",
-      );
-    }
-  }
-}
-
 function initGame(container: HTMLElement): void {
   const deck = createDeck();
   let state: GameState = generateInitialState(deck);
@@ -81,7 +56,6 @@ function initGame(container: HTMLElement): void {
         animationClass: "animate-set-pulse",
         affectedIndices: selectedIndices,
       });
-      applyFeedbackColor(container, selectedIndices, "green");
 
       setTimeout(() => {
         // Step 2: Exit — cards fly up and out with rotation
@@ -90,7 +64,6 @@ function initGame(container: HTMLElement): void {
           animationClass: "animate-card-exit",
           affectedIndices: selectedIndices,
         });
-        applyFeedbackColor(container, selectedIndices, "green");
 
         setTimeout(() => {
           // Step 3: New cards drop in with bounce
@@ -118,7 +91,6 @@ function initGame(container: HTMLElement): void {
         animationClass: "animate-shake",
         affectedIndices: selectedIndices,
       });
-      applyFeedbackColor(container, selectedIndices, "red");
 
       setTimeout(() => {
         animation.phase = "idle";
