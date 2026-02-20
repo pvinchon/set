@@ -22,10 +22,10 @@ const CARD_BASE_CLASSES = [
   "justify-center",
   "gap-1",
   "p-2",
+  "touch-manipulation",
   "transition-all",
   "duration-200",
   "ease-[cubic-bezier(0.34,1.56,0.64,1)]",
-  "hover:shadow-2xl",
   "active:shadow-sm",
 ].join(" ");
 
@@ -60,8 +60,9 @@ export function renderCard(card: Card, selected = false): HTMLElement {
   const el = document.createElement("div");
   el.className = cardClassName(selected);
 
-  // Randomized hover: each mouseenter picks slightly different lift/tilt/scale
-  el.addEventListener("mouseenter", () => {
+  // Randomized hover: only for mouse/pen, not touch (avoids sticky hover on mobile)
+  el.addEventListener("pointerenter", (e: PointerEvent) => {
+    if (e.pointerType === "touch") return;
     const baseLift = -3, liftVariance = 1; // -2 to -4px
     const lift = baseLift + rand(-liftVariance, liftVariance);
     const tilt = rand(-2, 2); // -2 to 2deg
@@ -72,18 +73,26 @@ export function renderCard(card: Card, selected = false): HTMLElement {
     }deg) scale(${scale.toFixed(3)})`;
   });
 
-  el.addEventListener("mouseleave", () => {
+  el.addEventListener("pointerleave", (e: PointerEvent) => {
+    if (e.pointerType === "touch") return;
     el.style.removeProperty("transform");
   });
 
-  // Active press-down (applied on pointerdown, cleared on pointerup/leave)
-  el.addEventListener("pointerdown", () => {
+  // Active press-down (applied on pointerdown, cleared on pointerup/cancel)
+  el.addEventListener("pointerdown", (e: PointerEvent) => {
     const tilt = rand(-0.8, 0.8); // -0.8 to 0.8deg
     el.style.transform = `translateY(1px) rotate(${
       tilt.toFixed(1)
     }deg) scale(0.92)`;
+    // On touch, capture so we always get pointerup/cancel even if finger moves off
+    if (e.pointerType === "touch") {
+      el.setPointerCapture(e.pointerId);
+    }
   });
   el.addEventListener("pointerup", () => {
+    el.style.removeProperty("transform");
+  });
+  el.addEventListener("pointercancel", () => {
     el.style.removeProperty("transform");
   });
 
