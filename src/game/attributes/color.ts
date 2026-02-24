@@ -8,9 +8,9 @@ export enum Color {
 }
 
 export const COLOR_HEX: Record<Color, string> = {
-  [Color.A]: "#ff0000", // red
-  [Color.B]: "#00ff00", // green
-  [Color.C]: "#0000ff", // blue
+  [Color.A]: "#dc267f",
+  [Color.B]: "#648fff",
+  [Color.C]: "#ffb000",
 };
 
 export function renderColor(

@@ -7,8 +7,7 @@ import {
   renderShape,
 } from "@/game/attributes/mod.ts";
 
-/** Tailwind `sm:` breakpoint in pixels. */
-const SM_BREAKPOINT = 640;
+import { getPositionFactor } from "@/utils/grid.ts";
 
 /** Selection transform intensities. */
 const SEL = {
@@ -20,22 +19,6 @@ const SEL = {
   pressDownTranslateYPx: 3,
   pressDownScale: 0.92,
 } as const;
-
-/** Return the current column count (3 on mobile, 4 on sm+). */
-function getColumnCount(): number {
-  return globalThis.innerWidth >= SM_BREAKPOINT ? 4 : 3;
-}
-
-/**
- * Normalized horizontal position in [-1, 1] for the card at `index`.
- * -1 = leftmost column, 0 = center, 1 = rightmost column.
- */
-export function getPositionFactor(index: number): number {
-  const cols = getColumnCount();
-  const col = index % cols;
-  const center = (cols - 1) / 2;
-  return center === 0 ? 0 : (col - center) / center;
-}
 
 /** Build a CSS transform string for a given position factor and intensity (1 = selected, 1/3 = hover). */
 function computeTransform(factor: number, intensity: number): string {
@@ -56,7 +39,7 @@ export function applySelectionTransform(
 ): void {
   if (selected) {
     el.dataset.selected = "1";
-    el.style.transform = computeTransform(getPositionFactor(index), 1);
+    el.style.transform = computeTransform(getPositionFactor(index, el), 1);
   } else {
     delete el.dataset.selected;
     el.style.removeProperty("transform");
@@ -103,9 +86,9 @@ function createBaseSVG(): SVGSVGElement {
   return svg;
 }
 
-function restoreTransform(el: HTMLElement, index: number): void {
+function restoreTransform(el: HTMLElement): void {
   if (el.dataset.selected) {
-    const idx = Number(el.dataset.index ?? index);
+    const idx = Number(el.dataset.index ?? 0);
     applySelectionTransform(el, idx, true);
   } else {
     el.style.removeProperty("transform");
@@ -129,7 +112,7 @@ export function renderCard(
     if (el.dataset.selected) return;
     const idx = Number(el.dataset.index ?? 0);
     el.style.transform = computeTransform(
-      getPositionFactor(idx),
+      getPositionFactor(idx, el),
       SEL.hoverRatio,
     );
   });
@@ -150,8 +133,8 @@ export function renderCard(
       // Ignore errors from setPointerCapture (e.g., unsupported environments).
     }
   });
-  el.addEventListener("pointerup", () => restoreTransform(el, index));
-  el.addEventListener("pointercancel", () => restoreTransform(el, index));
+  el.addEventListener("pointerup", () => restoreTransform(el));
+  el.addEventListener("pointercancel", () => restoreTransform(el));
 
   let svgs: SVGSVGElement[] = [createBaseSVG()];
   svgs = renderShape(card.shape, svgs);

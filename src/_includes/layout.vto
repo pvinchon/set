@@ -9,7 +9,7 @@
     <link rel="manifest" href="/manifest.webmanifest">
     <link rel="apple-touch-icon" href="/icons/icon-192.png">
   </head>
-  <body>
+  <body class="min-h-screen bg-gray-100">
     {{ content }}
     {{ if isProduction }}
       <script>if("serviceWorker"in navigator){navigator.serviceWorker.register("{{ "/service_worker.js" |> url }}")}</script>

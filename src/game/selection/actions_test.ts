@@ -1,9 +1,5 @@
 import { assertEquals } from "jsr:@std/assert@1";
-import {
-  clearSelection,
-  isComplete,
-  toggleSelection,
-} from "@/game/selection/actions.ts";
+import { isComplete, toggleSelection } from "@/game/selection/actions.ts";
 import { EMPTY_SELECTION } from "@/game/selection/model.ts";
 
 Deno.test("toggleSelection adds index to empty selection", () => {
@@ -47,13 +43,6 @@ Deno.test("toggleSelection allows deselect when at 3", () => {
   const result = toggleSelection(selection, 4);
 
   assertEquals(result.indices, [1, 9]);
-});
-
-Deno.test("clearSelection returns empty selection", () => {
-  const result = clearSelection();
-
-  assertEquals(result, EMPTY_SELECTION);
-  assertEquals(result.indices, []);
 });
 
 Deno.test("isComplete returns false for empty selection", () => {

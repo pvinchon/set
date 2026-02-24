@@ -4,13 +4,19 @@ import type { Card } from "@/game/card/mod.ts";
 import { EMPTY_SELECTION } from "@/game/selection/mod.ts";
 import { drawCards } from "@/game/deck/mod.ts";
 import { hasAnySet } from "@/game/set/mod.ts";
+import { DifficultyLevel } from "@/game/difficulty/mod.ts";
 
-export function generateInitialState(deck: Deck): GameState {
-  const cards = generateBoardCards(deck, 12);
+export function generateInitialState(
+  deck: Deck,
+  boardSize: number = 12,
+  difficulty: DifficultyLevel = DifficultyLevel.Hard,
+): GameState {
+  const cards = generateBoardCards(deck, boardSize);
   return {
     deck,
     board: { cards },
     selection: EMPTY_SELECTION,
+    difficulty,
   };
 }
 

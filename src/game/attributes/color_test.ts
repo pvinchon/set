@@ -7,16 +7,16 @@ Deno.test("Color enum has values 0, 1, 2", () => {
   assertEquals(Color.C, 2);
 });
 
-Deno.test("COLOR_HEX has entry for Color.A (red)", () => {
-  assertEquals(COLOR_HEX[Color.A], "#ff0000");
+Deno.test("COLOR_HEX has entry for Color.A", () => {
+  assertEquals(COLOR_HEX[Color.A], "#dc267f");
 });
 
-Deno.test("COLOR_HEX has entry for Color.B (green)", () => {
-  assertEquals(COLOR_HEX[Color.B], "#00ff00");
+Deno.test("COLOR_HEX has entry for Color.B", () => {
+  assertEquals(COLOR_HEX[Color.B], "#648fff");
 });
 
-Deno.test("COLOR_HEX has entry for Color.C (blue)", () => {
-  assertEquals(COLOR_HEX[Color.C], "#0000ff");
+Deno.test("COLOR_HEX has entry for Color.C", () => {
+  assertEquals(COLOR_HEX[Color.C], "#ffb000");
 });
 
 Deno.test("COLOR_HEX values are valid hex colors", () => {
@@ -46,26 +46,26 @@ function createMockSVG(): {
   };
 }
 
-Deno.test("renderColor sets --attribute-color to red for Color.A", () => {
+Deno.test("renderColor sets --attribute-color for Color.A", () => {
   const mock = createMockSVG();
   const result = renderColor(Color.A, [mock as unknown as SVGSVGElement]);
 
   assertEquals(result.length, 1);
-  assertEquals(mock.style.props["--attribute-color"], "#ff0000");
+  assertEquals(mock.style.props["--attribute-color"], "#dc267f");
 });
 
-Deno.test("renderColor sets --attribute-color to green for Color.B", () => {
+Deno.test("renderColor sets --attribute-color for Color.B", () => {
   const mock = createMockSVG();
   renderColor(Color.B, [mock as unknown as SVGSVGElement]);
 
-  assertEquals(mock.style.props["--attribute-color"], "#00ff00");
+  assertEquals(mock.style.props["--attribute-color"], "#648fff");
 });
 
-Deno.test("renderColor sets --attribute-color to blue for Color.C", () => {
+Deno.test("renderColor sets --attribute-color for Color.C", () => {
   const mock = createMockSVG();
   renderColor(Color.C, [mock as unknown as SVGSVGElement]);
 
-  assertEquals(mock.style.props["--attribute-color"], "#0000ff");
+  assertEquals(mock.style.props["--attribute-color"], "#ffb000");
 });
 
 Deno.test("renderColor applies to all SVGs in array", () => {
@@ -77,6 +77,6 @@ Deno.test("renderColor applies to all SVGs in array", () => {
   ]);
 
   assertEquals(result.length, 2);
-  assertEquals(mock1.style.props["--attribute-color"], "#ff0000");
-  assertEquals(mock2.style.props["--attribute-color"], "#ff0000");
+  assertEquals(mock1.style.props["--attribute-color"], "#dc267f");
+  assertEquals(mock2.style.props["--attribute-color"], "#dc267f");
 });
