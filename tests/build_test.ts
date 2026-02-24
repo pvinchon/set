@@ -29,9 +29,9 @@ Deno.test("build produces _site/index.html", async () => {
   );
 });
 
-Deno.test("index.html contains game board container", async () => {
+Deno.test("index.html contains app container", async () => {
   const html = await Deno.readTextFile(`${SITE_DIR}/index.html`);
-  assertStringIncludes(html, 'id="game-board"');
+  assertStringIncludes(html, 'id="app"');
 });
 
 Deno.test("index.html contains game script tag", async () => {

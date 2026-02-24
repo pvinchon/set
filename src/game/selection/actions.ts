@@ -1,5 +1,4 @@
 import type { Selection } from "@/game/selection/model.ts";
-import { EMPTY_SELECTION } from "@/game/selection/model.ts";
 
 export function toggleSelection(
   selection: Selection,
@@ -19,10 +18,6 @@ export function toggleSelection(
 
   // Select
   return { indices: [...current, index] };
-}
-
-export function clearSelection(): Selection {
-  return EMPTY_SELECTION;
 }
 
 export function isComplete(selection: Selection): boolean {

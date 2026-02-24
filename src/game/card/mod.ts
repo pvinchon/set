@@ -4,6 +4,5 @@ export { cardEquals } from "@/game/card/equality.ts";
 export {
   applySelectionTransform,
   cardClassName,
-  getPositionFactor,
   renderCard,
 } from "@/game/card/renderer.ts";

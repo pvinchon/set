@@ -4,12 +4,42 @@ import { createDeck } from "@/game/deck/mod.ts";
 import { hasAnySet } from "@/game/set/mod.ts";
 import { cardEquals } from "@/game/card/mod.ts";
 import { EMPTY_SELECTION } from "@/game/selection/mod.ts";
+import { DifficultyLevel } from "@/game/difficulty/mod.ts";
+import { Num } from "@/game/attributes/mod.ts";
 
 Deno.test("generateInitialState returns 12 cards on board", () => {
   const deck = createDeck();
   const state = generateInitialState(deck);
 
   assertEquals(state.board.cards.length, 12);
+});
+
+Deno.test("generateInitialState returns 9 cards when boardSize is 9", () => {
+  const deck = createDeck({ nums: [Num.A] });
+  const state = generateInitialState(deck, 9, DifficultyLevel.Easy);
+
+  assertEquals(state.board.cards.length, 9);
+});
+
+Deno.test("generateInitialState returns 12 cards when boardSize is 12 with restricted deck", () => {
+  const deck = createDeck({ nums: [Num.A] });
+  const state = generateInitialState(deck, 12, DifficultyLevel.Normal);
+
+  assertEquals(state.board.cards.length, 12);
+});
+
+Deno.test("generateInitialState stores difficulty in state", () => {
+  const deck = createDeck();
+  const state = generateInitialState(deck, 12, DifficultyLevel.Hard);
+
+  assertEquals(state.difficulty, DifficultyLevel.Hard);
+});
+
+Deno.test("generateInitialState defaults to Hard difficulty", () => {
+  const deck = createDeck();
+  const state = generateInitialState(deck);
+
+  assertEquals(state.difficulty, DifficultyLevel.Hard);
 });
 
 Deno.test("generateInitialState returns distinct cards", () => {

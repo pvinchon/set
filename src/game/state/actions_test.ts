@@ -7,6 +7,7 @@ import { createCard } from "@/game/card/mod.ts";
 import { Color, Num, Shading, Shape } from "@/game/attributes/mod.ts";
 import type { GameState } from "@/game/state/model.ts";
 import type { Board } from "@/game/board/mod.ts";
+import { DifficultyLevel } from "@/game/difficulty/mod.ts";
 
 function createTestState(): GameState {
   const deck = createDeck();
@@ -69,6 +70,7 @@ Deno.test("selectCard: valid set clears selection and replaces cards", () => {
     deck,
     board,
     selection: { indices: [] },
+    difficulty: DifficultyLevel.Hard,
   };
 
   // Select indices 0, 1, 2 which form a valid set
@@ -107,7 +109,12 @@ Deno.test("selectCard: invalid set clears selection", () => {
       createCard(Num.C, Shape.C, Shading.C, Color.C), // Adds valid set with [10] and another
     ],
   };
-  const state: GameState = { deck, board, selection: { indices: [] } };
+  const state: GameState = {
+    deck,
+    board,
+    selection: { indices: [] },
+    difficulty: DifficultyLevel.Hard,
+  };
 
   // Verify 0, 1, 2 is invalid
   assertEquals(
