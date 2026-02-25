@@ -23,20 +23,20 @@ Add six CSS animation types to the Set card game (initial deal, hover/active, se
 
 ## Constitution Check
 
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+_GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
 
-| Principle | Requirement | Status | Notes |
-|---|---|---|---|
-| I. Lightweight & Fast | Payload <100KB, no external deps, FCP <1s | ✅ PASS | CSS keyframes add ~200 bytes. No JS library. GPU-accelerated transforms only. |
-| II. Offline-First | Fully playable offline | ✅ PASS | No network dependency. Pure CSS/JS animations. |
-| III. Simplicity | Only elements needed for current state. YAGNI. | ✅ PASS | No animation library, no state machine in data model, no config UI. Minimal JS coordination. |
-| Runtime: Deno | All tooling under Deno | ✅ PASS | No change to build pipeline. |
-| Language: TypeScript | All logic in TS | ✅ PASS | Animation coordinator is TS. |
-| Styling: Tailwind CSS | Utility-first, purge unused | ✅ PASS | New utilities via `@utility` directive. All used classes ship. |
-| Build: Lume | Lume handles build | ✅ PASS | No build config changes. |
-| Rendering: DOM-based | DOM rendering | ✅ PASS | Incremental DOM patching is still DOM-based. |
-| Testing: `deno test` | Game logic tested | ✅ PASS | State logic unchanged, existing tests pass. Rendering changes are CSS-visual. |
-| Accessibility: WCAG 2.1 AA | Color contrast, keyboard nav | ✅ PASS | Animations don't affect contrast ratios or keyboard navigation. |
+| Principle                  | Requirement                                    | Status  | Notes                                                                                        |
+| -------------------------- | ---------------------------------------------- | ------- | -------------------------------------------------------------------------------------------- |
+| I. Lightweight & Fast      | Payload <100KB, no external deps, FCP <1s      | ✅ PASS | CSS keyframes add ~200 bytes. No JS library. GPU-accelerated transforms only.                |
+| II. Offline-First          | Fully playable offline                         | ✅ PASS | No network dependency. Pure CSS/JS animations.                                               |
+| III. Simplicity            | Only elements needed for current state. YAGNI. | ✅ PASS | No animation library, no state machine in data model, no config UI. Minimal JS coordination. |
+| Runtime: Deno              | All tooling under Deno                         | ✅ PASS | No change to build pipeline.                                                                 |
+| Language: TypeScript       | All logic in TS                                | ✅ PASS | Animation coordinator is TS.                                                                 |
+| Styling: Tailwind CSS      | Utility-first, purge unused                    | ✅ PASS | New utilities via `@utility` directive. All used classes ship.                               |
+| Build: Lume                | Lume handles build                             | ✅ PASS | No build config changes.                                                                     |
+| Rendering: DOM-based       | DOM rendering                                  | ✅ PASS | Incremental DOM patching is still DOM-based.                                                 |
+| Testing: `deno test`       | Game logic tested                              | ✅ PASS | State logic unchanged, existing tests pass. Rendering changes are CSS-visual.                |
+| Accessibility: WCAG 2.1 AA | Color contrast, keyboard nav                   | ✅ PASS | Animations don't affect contrast ratios or keyboard navigation.                              |
 
 **Gate result**: ✅ All checks pass. No violations to justify.
 

@@ -21,24 +21,24 @@ Make the site fully functional offline after a single online visit by adding a S
 
 ## Constitution Check
 
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+_GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
 
-| Principle | Requirement | Status | Notes |
-|---|---|---|---|
-| **I. Lightweight & Fast** | Payload < 100 KB compressed | PASS | SW (~2 KB) + manifest (~0.5 KB) + icons (~30 KB) well under budget |
-| **I. Lightweight & Fast** | Zero external runtime dependencies | PASS | No new dependencies; SW is vanilla JS |
-| **I. Lightweight & Fast** | FCP < 1s on 3G Fast | PASS | SW registration is async, does not block rendering |
-| **I. Lightweight & Fast** | Deno + Lume for build | PASS | All build integration uses Lume plugins/hooks |
-| **II. Offline-First** | SW caches all critical assets on install | PASS | Primary deliverable of this feature |
-| **II. Offline-First** | Valid PWA manifest for home screen | PASS | Primary deliverable of this feature |
-| **II. Offline-First** | Cache versioning invalidates stale assets | PASS | Cache name includes build timestamp; activate event purges old caches |
-| **III. Simplicity** | YAGNI — no speculative features | PASS | Only what's needed: SW, manifest, icons. No push notifications, no background sync |
-| **Technical** | TypeScript for build config | PASS | `_config.ts` changes are TypeScript |
-| **Technical** | Tailwind CSS (purge unused) | N/A | No Tailwind changes needed |
-| **Technical** | `deno test` for tests | PASS | Tests will use `deno test` |
-| **Technical** | GitHub Actions CI/CD | PASS | No pipeline changes needed; SW is a build output |
-| **Technical** | GitHub Pages hosting | PASS | All files are static; SW scope works at root |
-| **Workflow** | Small, atomic commits | PASS | Feature decomposes into 3-4 small commits |
+| Principle                 | Requirement                               | Status | Notes                                                                              |
+| ------------------------- | ----------------------------------------- | ------ | ---------------------------------------------------------------------------------- |
+| **I. Lightweight & Fast** | Payload < 100 KB compressed               | PASS   | SW (~2 KB) + manifest (~0.5 KB) + icons (~30 KB) well under budget                 |
+| **I. Lightweight & Fast** | Zero external runtime dependencies        | PASS   | No new dependencies; SW is vanilla JS                                              |
+| **I. Lightweight & Fast** | FCP < 1s on 3G Fast                       | PASS   | SW registration is async, does not block rendering                                 |
+| **I. Lightweight & Fast** | Deno + Lume for build                     | PASS   | All build integration uses Lume plugins/hooks                                      |
+| **II. Offline-First**     | SW caches all critical assets on install  | PASS   | Primary deliverable of this feature                                                |
+| **II. Offline-First**     | Valid PWA manifest for home screen        | PASS   | Primary deliverable of this feature                                                |
+| **II. Offline-First**     | Cache versioning invalidates stale assets | PASS   | Cache name includes build timestamp; activate event purges old caches              |
+| **III. Simplicity**       | YAGNI — no speculative features           | PASS   | Only what's needed: SW, manifest, icons. No push notifications, no background sync |
+| **Technical**             | TypeScript for build config               | PASS   | `_config.ts` changes are TypeScript                                                |
+| **Technical**             | Tailwind CSS (purge unused)               | N/A    | No Tailwind changes needed                                                         |
+| **Technical**             | `deno test` for tests                     | PASS   | Tests will use `deno test`                                                         |
+| **Technical**             | GitHub Actions CI/CD                      | PASS   | No pipeline changes needed; SW is a build output                                   |
+| **Technical**             | GitHub Pages hosting                      | PASS   | All files are static; SW scope works at root                                       |
+| **Workflow**              | Small, atomic commits                     | PASS   | Feature decomposes into 3-4 small commits                                          |
 
 **Gate result: PASS — no violations.**
 

@@ -21,7 +21,15 @@ The Lume build process injects data into `service_worker.js` by replacing placeh
 const PRECACHE_URLS = __PRECACHE_URLS__;
 
 // After build processing (example):
-const PRECACHE_URLS = ["/", "/style.css", "/icons/icon-192.png", "/icons/icon-512.png", "/icons/icon-maskable-192.png", "/icons/icon-maskable-512.png", "/manifest.webmanifest"];
+const PRECACHE_URLS = [
+	'/',
+	'/style.css',
+	'/icons/icon-192.png',
+	'/icons/icon-512.png',
+	'/icons/icon-maskable-192.png',
+	'/icons/icon-maskable-512.png',
+	'/manifest.webmanifest'
+];
 ```
 
 ### Cache Name
@@ -31,10 +39,10 @@ const PRECACHE_URLS = ["/", "/style.css", "/icons/icon-192.png", "/icons/icon-51
 
 ```js
 // Before:
-const CACHE_NAME = "__CACHE_NAME__";
+const CACHE_NAME = '__CACHE_NAME__';
 
 // After:
-const CACHE_NAME = "set-v1739000000";
+const CACHE_NAME = 'set-v1739000000';
 ```
 
 ## 2. HTML → Service Worker Registration Contract
@@ -43,9 +51,9 @@ The build process injects a `<script>` tag before `</body>` in every HTML page:
 
 ```html
 <script>
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/service_worker.js");
-  }
+	if ('serviceWorker' in navigator) {
+		navigator.serviceWorker.register('/service_worker.js');
+	}
 </script>
 ```
 
@@ -54,23 +62,26 @@ The build process injects a `<script>` tag before `</body>` in every HTML page:
 The build process injects into the `<head>` of every HTML page:
 
 ```html
-<link rel="manifest" href="/manifest.webmanifest">
-<meta name="theme-color" content="#111827">
-<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta name="theme-color" content="#111827" />
+<link rel="apple-touch-icon" href="/icons/icon-192.png" />
 ```
 
 ## 4. Service Worker → Browser Contract
 
 ### Install Event
+
 - Opens a cache named `CACHE_NAME`
 - Calls `cache.addAll(PRECACHE_URLS)` to fetch and store all assets
 - Calls `self.skipWaiting()` to activate immediately
 
 ### Activate Event
+
 - Deletes all caches whose name is not `CACHE_NAME`
 - Calls `self.clients.claim()` to take over all open tabs
 
 ### Fetch Event
+
 - Matches the request against the cache
 - If found: returns the cached response
 - If not found: fetches from network (fallback for any uncached requests)

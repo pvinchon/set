@@ -11,7 +11,7 @@
 
 - Q: Should this Hello World feature include PWA/offline foundations (Service Worker + web app manifest), or defer to a separate feature? → A: Defer PWA/offline to a dedicated follow-up feature; this feature is static page + CI/CD only.
 
-## User Scenarios & Testing *(mandatory)*
+## User Scenarios & Testing _(mandatory)_
 
 ### User Story 1 - Visit the Hello World Page (Priority: P1)
 
@@ -67,7 +67,7 @@ A contributor merges an approved pull request into `main`. The deployment pipeli
 - What happens if two PRs are merged to `main` in rapid succession — do deployments queue or conflict?
 - What happens when the hosting environment is temporarily unreachable during a deploy?
 
-## Requirements *(mandatory)*
+## Requirements _(mandatory)_
 
 ### Functional Requirements
 
@@ -92,7 +92,7 @@ A contributor merges an approved pull request into `main`. The deployment pipeli
 - **CI Pipeline**: The automated workflow triggered by pushes/PRs. Attributes: trigger event, steps (fmt, lint, test, build), pass/fail status.
 - **CD Pipeline**: The automated workflow triggered by merges to `main`. Attributes: trigger event, build step, deploy step, target environment.
 
-## Success Criteria *(mandatory)*
+## Success Criteria _(mandatory)_
 
 ### Measurable Outcomes
 

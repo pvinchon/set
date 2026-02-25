@@ -122,10 +122,10 @@ Each domain folder has `mod.ts` as its public API:
 
 ```typescript
 // Import from domain, not from internal files
-import { Card, createCard, renderCard } from "./card/mod.ts";
+import { Card, createCard, renderCard } from './card/mod.ts';
 
 // ❌ Avoid deep imports
-import { Card } from "./card/model.ts";
+import { Card } from './card/model.ts';
 ```
 
 ### 2. Enums for Type Safety
@@ -133,13 +133,14 @@ import { Card } from "./card/model.ts";
 Feature values use enums to prevent mixing:
 
 ```typescript
-import { Num, Color } from "./attributes/mod.ts";
+import { Num, Color } from './attributes/mod.ts';
 
 const num = Num.B;
 const col = Color.B;
 
 // ❌ TypeScript Error: Cannot compare Num with Color
-if (num === col) { }
+if (num === col) {
+}
 ```
 
 ### 3. Pure Functions
@@ -149,7 +150,7 @@ Logic files (validator, completer, generator) are pure functions with no DOM acc
 ```typescript
 // set/validator.ts - Pure, easily testable
 export function isValidSet(a: Card, b: Card, c: Card): boolean {
-  // No DOM, no side effects
+	// No DOM, no side effects
 }
 ```
 
@@ -160,7 +161,7 @@ All DOM operations are in `renderer.ts` files:
 ```typescript
 // card/renderer.ts - All DOM code here
 export function renderCard(card: Card, index: number): HTMLElement {
-  // SVG generation, DOM manipulation
+	// SVG generation, DOM manipulation
 }
 ```
 
@@ -205,8 +206,8 @@ deno test
 
 ## Configuration
 
-| File | Purpose |
-|------|---------|
-| `_config.ts` | Lume config with esbuild plugin |
-| `deno.json` | Task definitions, import map |
-| `src/game/main.ts` | Game entry point |
+| File               | Purpose                         |
+| ------------------ | ------------------------------- |
+| `_config.ts`       | Lume config with esbuild plugin |
+| `deno.json`        | Task definitions, import map    |
+| `src/game/main.ts` | Game entry point                |

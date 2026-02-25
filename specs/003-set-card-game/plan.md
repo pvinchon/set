@@ -21,18 +21,19 @@ Build a single-player Set card game running entirely in the browser. The game di
 
 ## Constitution Check
 
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+_GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
 
-| Principle | Requirement | Pre-Design | Post-Design |
-|-----------|-------------|------------|-------------|
-| **Lightweight & Fast** | < 100KB compressed, FCP < 1s | ✅ | ✅ Domain folders don't add payload |
-| **Offline-First** | PWA with Service Worker | ✅ | ✅ No change |
-| **Simplicity** | Minimal UI, YAGNI | ✅ | ✅ Small focused modules (~50-100 LOC each) |
-| **Tech Stack** | Deno, TypeScript, Lume, Tailwind | ✅ | ✅ No new dependencies |
-| **Testing** | `deno test` for game logic | ✅ | ✅ Pure functions more testable |
-| **CI/CD** | GitHub Actions, Lighthouse ≥ 95 | ✅ | ✅ Existing pipeline |
+| Principle              | Requirement                      | Pre-Design | Post-Design                                 |
+| ---------------------- | -------------------------------- | ---------- | ------------------------------------------- |
+| **Lightweight & Fast** | < 100KB compressed, FCP < 1s     | ✅         | ✅ Domain folders don't add payload         |
+| **Offline-First**      | PWA with Service Worker          | ✅         | ✅ No change                                |
+| **Simplicity**         | Minimal UI, YAGNI                | ✅         | ✅ Small focused modules (~50-100 LOC each) |
+| **Tech Stack**         | Deno, TypeScript, Lume, Tailwind | ✅         | ✅ No new dependencies                      |
+| **Testing**            | `deno test` for game logic       | ✅         | ✅ Pure functions more testable             |
+| **CI/CD**              | GitHub Actions, Lighthouse ≥ 95  | ✅         | ✅ Existing pipeline                        |
 
 **Post-Design Notes**:
+
 - Enums add minimal runtime overhead (just numbers)
 - Domain folders improve organization without adding complexity
 - Renderer isolation makes logic 100% testable without DOM mocks
@@ -130,15 +131,32 @@ Attributes use enums to prevent mixing feature values:
 type FeatureValue = 0 | 1 | 2;
 
 // ✅ With enums: compiler catches mismatched comparisons
-enum Num { A = 0, B = 1, C = 2 }
-enum Shape { A = 0, B = 1, C = 2 }
-enum Shading { A = 0, B = 1, C = 2 }
-enum Color { A = 0, B = 1, C = 2 }
+enum Num {
+	A = 0,
+	B = 1,
+	C = 2
+}
+enum Shape {
+	A = 0,
+	B = 1,
+	C = 2
+}
+enum Shading {
+	A = 0,
+	B = 1,
+	C = 2
+}
+enum Color {
+	A = 0,
+	B = 1,
+	C = 2
+}
 ```
 
 ### 2. Domain Folder Structure
 
 Each domain folder contains:
+
 - `mod.ts` - Public API (re-exports)
 - `model.ts` - Type definitions (pure data)
 - `*.ts` - Logic helpers (pure functions, testable)
@@ -170,6 +188,7 @@ attributes/ ← card/ ← deck/
 ## Complexity Tracking
 
 No constitution violations. Architecture aligns with simplicity principle:
+
 - Each domain is ~50-100 LOC
 - All logic is pure and testable
 - Renderers isolate DOM side effects

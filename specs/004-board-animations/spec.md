@@ -5,7 +5,7 @@
 **Status**: Draft  
 **Input**: User description: "create animations when rendering the board, hovering cards, selecting cards, selecting a valid set, selecting an invalid set, rendering the new cards"
 
-## User Scenarios & Testing *(mandatory)*
+## User Scenarios & Testing _(mandatory)_
 
 ### User Story 1 - Initial Board Deal Animation (Priority: P1)
 
@@ -112,7 +112,7 @@ After a valid Set is found and the success animation completes, the three matche
 - What happens during a card replacement if the deck runs out of replacement cards? The removal animation should still play but no entrance animation occurs for the empty slots.
 - What happens if the player resizes the browser window during an animation? Animations should complete gracefully without visual artifacts.
 
-## Requirements *(mandatory)*
+## Requirements _(mandatory)_
 
 ### Functional Requirements
 
@@ -129,7 +129,7 @@ After a valid Set is found and the success animation completes, the three matche
 - **FR-011**: System MUST re-enable player input immediately after all animations in a sequence have completed.
 - **FR-012**: System MUST ensure that non-replaced cards on the board remain visually stable (no movement, no re-animation) during card replacement animations.
 
-## Success Criteria *(mandatory)*
+## Success Criteria _(mandatory)_
 
 ### Measurable Outcomes
 

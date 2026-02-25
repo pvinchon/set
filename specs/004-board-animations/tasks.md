@@ -169,6 +169,7 @@
 ### Parallel Opportunities
 
 After Phase 2 (Foundational) is complete:
+
 - **US1, US2, US3** can all run in parallel (different concerns: deal timing, CSS hover/active, selection transition)
 - **US4 and US5** can run in parallel (different feedback types, same mechanism)
 - **US6** must follow US4

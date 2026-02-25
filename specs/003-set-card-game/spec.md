@@ -5,7 +5,7 @@
 **Status**: Draft  
 **Input**: User description: "Build the following game as a single player experience: https://en.wikipedia.org/wiki/Set_(card_game)"
 
-## User Scenarios & Testing *(mandatory)*
+## User Scenarios & Testing _(mandatory)_
 
 ### User Story 1 - Find Sets on the Board (Priority: P1)
 
@@ -78,7 +78,7 @@ At any point during the game, the player can choose to start fresh by refreshing
 - What happens during rapid selection? The system processes one selection at a time and prevents race conditions in the evaluation logic.
 - What happens if the player closes the browser? The session ends; no state is persisted.
 
-## Requirements *(mandatory)*
+## Requirements _(mandatory)_
 
 ### Functional Requirements
 
@@ -101,7 +101,7 @@ At any point during the game, the player can choose to start fresh by refreshing
 - **Board**: The set of 12 face-up cards currently in play. Always contains at least one valid set.
 - **Set**: A combination of exactly 3 cards where, for each of the 4 features, the values are either all the same or all different across the 3 cards.
 
-## Success Criteria *(mandatory)*
+## Success Criteria _(mandatory)_
 
 ### Measurable Outcomes
 

@@ -3,6 +3,7 @@
 Auto-generated from all feature plans. Last updated: 2026-02-11
 
 ## Active Technologies
+
 - TypeScript (Deno latest stable) for build config; vanilla JavaScript for the Service Worker (runs in the browser, not Deno) + Lume 3.2.1 (static site generator), Tailwind CSS (styling), no new dependencies (002-offline-support)
 - Browser Cache Storage API (client-side only) (002-offline-support)
 - TypeScript (Deno latest stable) for game logic and build; vanilla JavaScript for browser runtime + Lume 3.2.1 (static site generator), Tailwind CSS (styling), no new dependencies (003-set-card-game)
@@ -12,6 +13,11 @@ Auto-generated from all feature plans. Last updated: 2026-02-11
 - TypeScript (Deno latest stable) + Tailwind CSS v4 (via Lume plugin), Lume v3.2.1, esbuild (004-board-animations)
 - TypeScript (Deno latest stable) + Lume v3.2.1 (SSG), Tailwind CSS v4, esbuild (bundler) — zero runtime dependencies (005-title-screen-difficulty)
 - N/A — no persistence, state is in-memory only (005-title-screen-difficulty)
+- TypeScript (ESNext target), Deno 2.6.6+ + Vite 7.x, `vite-plugin-pwa`, `@tailwindcss/vite` (007-migrate-dynamic-framework)
+- N/A (client-side only, no persistence beyond service worker cache) (007-migrate-dynamic-framework)
+- TypeScript (ESNext target), Deno 2.6.6+ (tests/lint), Node.js 22+ (build/dev) + SvelteKit, `@sveltejs/adapter-static`, `@vite-pwa/sveltekit`, `@tailwindcss/vite` (007-migrate-dynamic-framework)
+- TypeScript (ESNext target), Node.js 22+ + SvelteKit, `@sveltejs/adapter-static`, `@vite-pwa/sveltekit`, `@tailwindcss/vite`, Vitest, ESLint, Prettier (007-migrate-dynamic-framework)
+- TypeScript (ESNext target), Node.js 22 LTS (22.13.0+) (007-migrate-dynamic-framework)
 
 - TypeScript (Deno latest stable) for build configuration; HTML + CSS for markup and styling + Lume (Deno-native static site generator), Tailwind CSS (via Lume plugin) (001-hello-world-website)
 
@@ -31,10 +37,10 @@ npm test && npm run lint
 TypeScript (Deno latest stable) for build configuration; HTML + CSS for markup and styling: Follow standard conventions
 
 ## Recent Changes
-- 005-title-screen-difficulty: Added TypeScript (Deno latest stable) + Lume v3.2.1 (SSG), Tailwind CSS v4, esbuild (bundler) — zero runtime dependencies
-- 004-board-animations: Added TypeScript (Deno latest stable) + Tailwind CSS v4 (via Lume plugin), Lume v3.2.1, esbuild
-- 004-board-animations: Added [if applicable, e.g., PostgreSQL, CoreData, files or N/A]
 
+- 007-migrate-dynamic-framework: Added TypeScript (ESNext target), Node.js 22 LTS (22.13.0+)
+- 007-migrate-dynamic-framework: Added TypeScript (ESNext target), Node.js 22+ + SvelteKit, `@sveltejs/adapter-static`, `@vite-pwa/sveltekit`, `@tailwindcss/vite`, Vitest, ESLint, Prettier
+- 007-migrate-dynamic-framework: Added TypeScript (ESNext target), Deno 2.6.6+ (tests/lint), Node.js 22+ (build/dev) + SvelteKit, `@sveltejs/adapter-static`, `@vite-pwa/sveltekit`, `@tailwindcss/vite`
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->

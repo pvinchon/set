@@ -11,7 +11,7 @@ Every asset, dependency, and line of code MUST justify its weight.
   no third-party analytics at load time.
 - First Contentful Paint MUST occur within 1 second on a median
   mobile connection (3G Fast profile).
-- Deno is the build tool. Lume is the static site generator. Its 
+- Deno is the build tool. Lume is the static site generator. Its
   output MUST be optimised (minified, compressed).
 
 **Rationale**: A game that loads instantly feels native and keeps

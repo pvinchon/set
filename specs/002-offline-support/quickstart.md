@@ -48,14 +48,14 @@ deno task serve
 
 ## Key Files
 
-| File | Purpose |
-|---|---|
-| `src/service_worker.js` | Service Worker source (precache list injected at build) |
-| `src/manifest.webmanifest` | PWA manifest |
-| `src/icons/` | App icons (192, 512, maskable variants) |
-| `_config.ts` | Lume build config with PWA hooks |
-| `src/_includes/layout.vto` | HTML layout (manifest link + apple-touch-icon) |
-| `tests/build_test.ts` | Build output assertions including PWA checks |
+| File                       | Purpose                                                 |
+| -------------------------- | ------------------------------------------------------- |
+| `src/service_worker.js`    | Service Worker source (precache list injected at build) |
+| `src/manifest.webmanifest` | PWA manifest                                            |
+| `src/icons/`               | App icons (192, 512, maskable variants)                 |
+| `_config.ts`               | Lume build config with PWA hooks                        |
+| `src/_includes/layout.vto` | HTML layout (manifest link + apple-touch-icon)          |
+| `tests/build_test.ts`      | Build output assertions including PWA checks            |
 
 ## Architecture Notes
 

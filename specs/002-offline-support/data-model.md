@@ -13,8 +13,8 @@ This feature has no server-side data model. All data is client-side, managed by 
 
 An ordered list of URLs representing every asset the Service Worker should cache during installation.
 
-| Field | Type | Description |
-|---|---|---|
+| Field  | Type       | Description                                                                                    |
+| ------ | ---------- | ---------------------------------------------------------------------------------------------- |
 | `urls` | `string[]` | Relative URL paths of all build outputs (e.g., `"/"`, `"/style.css"`, `"/icons/icon-192.png"`) |
 
 - **Generated at**: Build time, by Lume `process()` hook
@@ -25,10 +25,10 @@ An ordered list of URLs representing every asset the Service Worker should cache
 
 A named browser cache containing pre-fetched responses for all precached URLs.
 
-| Field | Type | Description |
-|---|---|---|
-| `name` | `string` | Unique cache identifier, e.g., `"set-v1739000000"` (includes build timestamp) |
-| `entries` | `Map<Request, Response>` | Browser-managed map of request→response pairs |
+| Field     | Type                     | Description                                                                   |
+| --------- | ------------------------ | ----------------------------------------------------------------------------- |
+| `name`    | `string`                 | Unique cache identifier, e.g., `"set-v1739000000"` (includes build timestamp) |
+| `entries` | `Map<Request, Response>` | Browser-managed map of request→response pairs                                 |
 
 - **Created during**: SW `install` event
 - **Purged during**: SW `activate` event (old caches with different names are deleted)
@@ -38,26 +38,26 @@ A named browser cache containing pre-fetched responses for all precached URLs.
 
 A JSON file describing the application's identity and display preferences.
 
-| Field | Value | Purpose |
-|---|---|---|
-| `name` | `"Set"` | Full application name |
-| `short_name` | `"Set"` | Name shown under home-screen icon |
-| `start_url` | `"/"` | URL opened when launched from home screen |
-| `display` | `"standalone"` | Removes browser chrome |
-| `background_color` | `"#ffffff"` | Splash screen background |
-| `theme_color` | `"#111827"` | Browser toolbar colour (gray-900 from Tailwind) |
-| `icons` | Array of icon descriptors | See Icon Assets below |
+| Field              | Value                     | Purpose                                         |
+| ------------------ | ------------------------- | ----------------------------------------------- |
+| `name`             | `"Set"`                   | Full application name                           |
+| `short_name`       | `"Set"`                   | Name shown under home-screen icon               |
+| `start_url`        | `"/"`                     | URL opened when launched from home screen       |
+| `display`          | `"standalone"`            | Removes browser chrome                          |
+| `background_color` | `"#ffffff"`               | Splash screen background                        |
+| `theme_color`      | `"#111827"`               | Browser toolbar colour (gray-900 from Tailwind) |
+| `icons`            | Array of icon descriptors | See Icon Assets below                           |
 
 ### 4. Icon Assets
 
 PNG images used by the manifest and browsers for home-screen display.
 
-| File | Size | Purpose | `purpose` field |
-|---|---|---|---|
-| `icon-192.png` | 192×192 | Standard app icon | `any` (default) |
-| `icon-512.png` | 512×512 | Splash screen / high-DPI | `any` (default) |
-| `icon-maskable-192.png` | 192×192 | Android adaptive icon | `maskable` |
-| `icon-maskable-512.png` | 512×512 | Android adaptive splash | `maskable` |
+| File                    | Size    | Purpose                  | `purpose` field |
+| ----------------------- | ------- | ------------------------ | --------------- |
+| `icon-192.png`          | 192×192 | Standard app icon        | `any` (default) |
+| `icon-512.png`          | 512×512 | Splash screen / high-DPI | `any` (default) |
+| `icon-maskable-192.png` | 192×192 | Android adaptive icon    | `maskable`      |
+| `icon-maskable-512.png` | 512×512 | Android adaptive splash  | `maskable`      |
 
 - **Standard icons**: Content fills the full canvas
 - **Maskable icons**: Important content within the inner 80% "safe zone"; outer 10% on each side may be cropped by the OS

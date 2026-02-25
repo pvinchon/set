@@ -6,6 +6,7 @@
 ## What This Feature Does
 
 Adds six types of CSS animations to the Set card game:
+
 1. **Initial deal** — cards appear one by one with staggered fade-in/slide-up
 2. **Hover** — cards lift and gain shadow when the pointer is over them
 3. **Active/pressed** — cards scale down slightly when pressed
@@ -29,18 +30,19 @@ The current renderer destroys and recreates all 12 card DOM elements on every st
 ### Key Design Decision: Animation Coordinator
 
 Animation orchestration lives in `main.ts` (the game loop), not in the state module. The game state (`GameState`) remains purely functional and unchanged. An `AnimationPhase` flag controls:
+
 - Whether clicks are processed
 - What CSS animation classes to apply
 - When state transitions are applied to the DOM
 
 ## Files Modified
 
-| File | Change |
-|---|---|
-| `src/style.css` | Add 4 new `@keyframes` + 5 `@utility` classes. Extend `shake` to 500ms. |
-| `src/game/card/renderer.ts` | Update hover/active Tailwind classes. Increase transition to 300ms. |
-| `src/game/state/renderer.ts` | Replace `innerHTML` wipe with incremental DOM patching. Add `options` parameter. |
-| `src/game/main.ts` | Add animation coordinator with phase tracking, input locking, and sequenced timeouts. |
+| File                         | Change                                                                                |
+| ---------------------------- | ------------------------------------------------------------------------------------- |
+| `src/style.css`              | Add 4 new `@keyframes` + 5 `@utility` classes. Extend `shake` to 500ms.               |
+| `src/game/card/renderer.ts`  | Update hover/active Tailwind classes. Increase transition to 300ms.                   |
+| `src/game/state/renderer.ts` | Replace `innerHTML` wipe with incremental DOM patching. Add `options` parameter.      |
+| `src/game/main.ts`           | Add animation coordinator with phase tracking, input locking, and sequenced timeouts. |
 
 ## Files Added
 
@@ -73,14 +75,14 @@ None added. Uses only existing Tailwind CSS v4 features (`@keyframes`, `@utility
 
 ## Timing Reference
 
-| Animation | Duration |
-|---|---|
-| Deal stagger | 100ms per card (1.2s total) |
-| Deal card animation | 300ms ease-out |
-| Hover/selection transition | 300ms |
-| Active transition | 150ms |
-| Valid set pulse | 500ms |
-| Invalid set shake | 500ms |
-| Card exit | 300ms |
-| Card enter | 300ms |
-| Full valid-set sequence | 1.1s |
+| Animation                  | Duration                    |
+| -------------------------- | --------------------------- |
+| Deal stagger               | 100ms per card (1.2s total) |
+| Deal card animation        | 300ms ease-out              |
+| Hover/selection transition | 300ms                       |
+| Active transition          | 150ms                       |
+| Valid set pulse            | 500ms                       |
+| Invalid set shake          | 500ms                       |
+| Card exit                  | 300ms                       |
+| Card enter                 | 300ms                       |
+| Full valid-set sequence    | 1.1s                        |
