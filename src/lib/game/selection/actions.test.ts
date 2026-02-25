@@ -1,0 +1,62 @@
+import { expect, test } from 'vitest';
+import { isComplete, toggleSelection } from '$lib/game/selection/actions';
+import { EMPTY_SELECTION } from '$lib/game/selection/model';
+
+test('toggleSelection adds index to empty selection', () => {
+	const result = toggleSelection(EMPTY_SELECTION, 5);
+
+	expect(result.indices).toEqual([5]);
+});
+
+test('toggleSelection removes index when already selected', () => {
+	const selection = { indices: [2, 5, 8] };
+	const result = toggleSelection(selection, 5);
+
+	expect(result.indices).toEqual([2, 8]);
+});
+
+test('toggleSelection adds second index', () => {
+	const selection = { indices: [3] };
+	const result = toggleSelection(selection, 7);
+
+	expect(result.indices).toEqual([3, 7]);
+});
+
+test('toggleSelection adds third index', () => {
+	const selection = { indices: [1, 4] };
+	const result = toggleSelection(selection, 9);
+
+	expect(result.indices).toEqual([1, 4, 9]);
+});
+
+test('toggleSelection ignores fourth selection attempt', () => {
+	const selection = { indices: [1, 4, 9] };
+	const result = toggleSelection(selection, 2);
+
+	// Returns original selection unchanged
+	expect(result).toEqual(selection);
+	expect(result.indices).toEqual([1, 4, 9]);
+});
+
+test('toggleSelection allows deselect when at 3', () => {
+	const selection = { indices: [1, 4, 9] };
+	const result = toggleSelection(selection, 4);
+
+	expect(result.indices).toEqual([1, 9]);
+});
+
+test('isComplete returns false for empty selection', () => {
+	expect(isComplete(EMPTY_SELECTION)).toEqual(false);
+});
+
+test('isComplete returns false for 1 card', () => {
+	expect(isComplete({ indices: [5] })).toEqual(false);
+});
+
+test('isComplete returns false for 2 cards', () => {
+	expect(isComplete({ indices: [5, 8] })).toEqual(false);
+});
+
+test('isComplete returns true for 3 cards', () => {
+	expect(isComplete({ indices: [1, 5, 8] })).toEqual(true);
+});

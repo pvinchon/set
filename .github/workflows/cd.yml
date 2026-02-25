@@ -21,17 +21,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: denoland/setup-deno@v2
+      - uses: actions/setup-node@v4
         with:
-          cache: true
+          node-version: 22
+          cache: npm
 
-      - name: Build
-        run: deno task build --location=https://pvinchon.github.io/set/
+      - run: npm ci
+
+      - run: npm run build
 
       - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: build
 
       - uses: actions/deploy-pages@v4
