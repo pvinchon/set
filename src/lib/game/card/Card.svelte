@@ -26,19 +26,18 @@
 	let color = $derived(COLOR_HEX[card.color]);
 	let path = $derived(shapePath(card.shape, SHAPE_WIDTH, SHAPE_HEIGHT));
 
+	let patternId = $derived(`stripe-${card.color}-${card.shape}`);
+
 	let fill = $derived.by(() => {
 		switch (card.shading) {
 			case Shading.A:
 				return color; // solid
 			case Shading.B:
-				return `url(#stripe-${card.color}-${card.shape})`; // striped
+				return `url(#${patternId})`; // striped
 			case Shading.C:
 				return 'none'; // open
 		}
 	});
-
-	let patternId = $derived(`stripe-${card.color}-${card.shape}`);
-	let showStripe = $derived(card.shading === Shading.B);
 
 	let viewBox = $derived(
 		`${0 - SHAPE_STROKE_WIDTH / 2} ${0 - SHAPE_STROKE_WIDTH / 2} ${SHAPE_WIDTH + SHAPE_STROKE_WIDTH} ${SHAPE_HEIGHT + SHAPE_STROKE_WIDTH}`
@@ -129,13 +128,6 @@
 	<!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
 	{#each { length: count } as _unused, i (i)}
 		<svg {viewBox} class="h-10 w-10">
-			{#if showStripe}
-				<defs>
-					<pattern id={patternId} patternUnits="userSpaceOnUse" width="8" height="8">
-						<line x1="0" y1="0" x2="0" y2="8" stroke={color} stroke-width="4" />
-					</pattern>
-				</defs>
-			{/if}
 			<path d={path} {fill} stroke={color} stroke-width="{SHAPE_STROKE_WIDTH}px" />
 		</svg>
 	{/each}

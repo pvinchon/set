@@ -1,47 +1,15 @@
 /// <reference lib="webworker" />
+import { clientsClaim } from 'workbox-core';
+import { precacheAndRoute, cleanupOutdatedCaches } from 'workbox-precaching';
 
 declare const self: ServiceWorkerGlobalScope;
 
-// Workbox replaces this with the precache manifest at build time
-const precacheEntries: Array<string | { url: string; revision: string | null }> =
-	self.__WB_MANIFEST;
+// Take control of all clients immediately when a new SW activates.
+self.skipWaiting();
+clientsClaim();
 
-const CACHE_NAME = `set-precache-v1`;
+// Remove precache entries from previous SW versions that are no longer in the manifest.
+cleanupOutdatedCaches();
 
-/** Extract URL strings from precache entries. */
-function getUrls(): string[] {
-	return precacheEntries.map((entry) => (typeof entry === 'string' ? entry : entry.url));
-}
-
-self.addEventListener('install', (event: ExtendableEvent) => {
-	event.waitUntil(
-		caches.open(CACHE_NAME).then((cache) => {
-			return cache.addAll(getUrls());
-		})
-	);
-	self.skipWaiting();
-});
-
-self.addEventListener('activate', (event: ExtendableEvent) => {
-	event.waitUntil(
-		caches.keys().then((keys) => {
-			return Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key)));
-		})
-	);
-	self.clients.claim();
-});
-
-self.addEventListener('fetch', (event: FetchEvent) => {
-	// Only handle GET requests
-	if (event.request.method !== 'GET') return;
-
-	// Only handle same-origin requests
-	const url = new URL(event.request.url);
-	if (url.origin !== self.location.origin) return;
-
-	event.respondWith(
-		caches.match(event.request).then((cached) => {
-			return cached || fetch(event.request);
-		})
-	);
-});
+// Precache all assets injected by Workbox and add cache-first routes for them.
+precacheAndRoute(self.__WB_MANIFEST);

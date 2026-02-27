@@ -2,6 +2,7 @@
 	import type { Board } from './model.ts';
 	import type { Card } from '$lib/game/card/model';
 	import CardComponent from '$lib/game/card/Card.svelte';
+	import Patterns from '$lib/game/board/Patterns.svelte';
 	import { cardEquals } from '$lib/game/card/equality';
 	import {
 		ANIM_DURATIONS,
@@ -69,6 +70,7 @@
 	let columns = $derived(board.cards.length === 9 ? 3 : 4);
 </script>
 
+<Patterns />
 <div
 	class={[
 		'grid w-full max-w-screen-sm gap-4',

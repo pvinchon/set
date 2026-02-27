@@ -7,7 +7,7 @@ const BUILD_DIR = 'build';
 
 describe('production build', () => {
 	beforeAll(() => {
-		execSync('npm run build', { stdio: 'pipe' });
+		execSync('npm run build', { stdio: 'inherit' });
 	});
 
 	test('produces build/ directory', () => {
