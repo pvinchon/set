@@ -68,18 +68,21 @@ Validates build output: checks that `_site/index.html` exists, contains "Hello, 
 ### CI (every push & PR)
 
 Defined in `.github/workflows/ci.yml`. Steps:
+
 1. Checkout → Setup Deno (cached) → `deno fmt --check` → `deno lint` → `deno task test` → `deno task build`
 2. Must pass for PRs to be mergeable (branch protection required status check).
 
 ### CD (merge to `main`)
 
 Defined in `.github/workflows/cd.yml`. Steps:
+
 1. Checkout → Setup Deno (cached) → `deno task build` → Upload artifact → Deploy to GitHub Pages
 2. Site is live at the GitHub Pages URL within minutes.
 
 ### Branch Protection Setup
 
 In the GitHub repo: **Settings → Branches → Branch protection rules** for `main`:
+
 - Require status checks to pass before merging: enable the CI workflow job.
 - Require branches to be up to date before merging.
 
@@ -104,12 +107,12 @@ In the GitHub repo: **Settings → Branches → Branch protection rules** for `m
 
 ## Common Tasks
 
-| Task | Command |
-|------|---------|
-| Dev server with live reload | `deno task serve` |
-| Production build | `deno task build` |
-| Check formatting | `deno fmt --check` |
-| Auto-format | `deno fmt` |
-| Lint TypeScript | `deno lint` |
-| Run tests | `deno task test` |
-| Upgrade Lume | `deno task lume upgrade` |
+| Task                        | Command                  |
+| --------------------------- | ------------------------ |
+| Dev server with live reload | `deno task serve`        |
+| Production build            | `deno task build`        |
+| Check formatting            | `deno fmt --check`       |
+| Auto-format                 | `deno fmt`               |
+| Lint TypeScript             | `deno lint`              |
+| Run tests                   | `deno task test`         |
+| Upgrade Lume                | `deno task lume upgrade` |

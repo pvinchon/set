@@ -21,26 +21,26 @@ Deliver a minimal "Hello, World!" static website built with Lume (Deno-native SS
 
 ## Constitution Check
 
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+_GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
 
-| Principle / Constraint | Status | Notes |
-|------------------------|--------|-------|
-| **I. Lightweight & Fast** — Payload < 100 KB | PASS | Single HTML page + purged Tailwind CSS; well under limit |
-| **I. Lightweight & Fast** — Zero external runtime deps | PASS | No frameworks, no CDN calls, no third-party analytics |
-| **I. Lightweight & Fast** — FCP < 1 s on Fast 3G | PASS | Minimal static page; design ensures compliance |
-| **I. Lightweight & Fast** — Deno + Lume; output minified/compressed | PASS | Lume builds static output; minification via Lume plugins |
-| **II. Offline-First** — Service Worker + PWA manifest | DEFERRED | Out of scope per clarification; follow-up feature |
-| **III. Simplicity** — Only elements needed for current state | PASS | Single page with greeting text only |
-| **III. Simplicity** — YAGNI | PASS | No speculative features included |
-| **Technical** — Deno runtime, TypeScript, HTML, CSS | PASS | All source uses these |
-| **Technical** — Tailwind CSS (purged) | PASS | Lume Tailwind plugin with purge enabled |
-| **Technical** — Lume SSG | PASS | `_config.ts` configures Lume |
-| **Technical** — `deno test` | PASS | Tests validate build output |
-| **Technical** — GitHub Actions CI on push/PR | PASS | Workflow defined in `.github/workflows/ci.yml` |
-| **Technical** — GitHub Actions CD to GitHub Pages on merge to `main` | PASS | Workflow defined in `.github/workflows/cd.yml` |
-| **Technical** — WCAG 2.1 AA | PASS | Colour contrast and keyboard navigation addressed in markup + Tailwind classes |
-| **Workflow** — `deno task` for all local commands | PASS | `deno.json` defines `build`, `serve`, `test`, `lint`, `fmt` tasks |
-| **Workflow** — Failing pipeline blocks merge | PASS | Branch protection + required status checks |
+| Principle / Constraint                                               | Status   | Notes                                                                          |
+| -------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------ |
+| **I. Lightweight & Fast** — Payload < 100 KB                         | PASS     | Single HTML page + purged Tailwind CSS; well under limit                       |
+| **I. Lightweight & Fast** — Zero external runtime deps               | PASS     | No frameworks, no CDN calls, no third-party analytics                          |
+| **I. Lightweight & Fast** — FCP < 1 s on Fast 3G                     | PASS     | Minimal static page; design ensures compliance                                 |
+| **I. Lightweight & Fast** — Deno + Lume; output minified/compressed  | PASS     | Lume builds static output; minification via Lume plugins                       |
+| **II. Offline-First** — Service Worker + PWA manifest                | DEFERRED | Out of scope per clarification; follow-up feature                              |
+| **III. Simplicity** — Only elements needed for current state         | PASS     | Single page with greeting text only                                            |
+| **III. Simplicity** — YAGNI                                          | PASS     | No speculative features included                                               |
+| **Technical** — Deno runtime, TypeScript, HTML, CSS                  | PASS     | All source uses these                                                          |
+| **Technical** — Tailwind CSS (purged)                                | PASS     | Lume Tailwind plugin with purge enabled                                        |
+| **Technical** — Lume SSG                                             | PASS     | `_config.ts` configures Lume                                                   |
+| **Technical** — `deno test`                                          | PASS     | Tests validate build output                                                    |
+| **Technical** — GitHub Actions CI on push/PR                         | PASS     | Workflow defined in `.github/workflows/ci.yml`                                 |
+| **Technical** — GitHub Actions CD to GitHub Pages on merge to `main` | PASS     | Workflow defined in `.github/workflows/cd.yml`                                 |
+| **Technical** — WCAG 2.1 AA                                          | PASS     | Colour contrast and keyboard navigation addressed in markup + Tailwind classes |
+| **Workflow** — `deno task` for all local commands                    | PASS     | `deno.json` defines `build`, `serve`, `test`, `lint`, `fmt` tasks              |
+| **Workflow** — Failing pipeline blocks merge                         | PASS     | Branch protection + required status checks                                     |
 
 **Gate result: PASS** — One deferred item (PWA/offline) is justified by spec clarification. No violations.
 
@@ -85,5 +85,5 @@ specs/001-hello-world-website/
 > No constitution violations requiring justification. Table intentionally left empty.
 
 | Violation | Why Needed | Simpler Alternative Rejected Because |
-|-----------|------------|-------------------------------------|
-| *(none)*  | —          | —                                   |
+| --------- | ---------- | ------------------------------------ |
+| _(none)_  | —          | —                                    |

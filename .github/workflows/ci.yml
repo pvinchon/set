@@ -3,7 +3,6 @@ name: CI
 on:
   workflow_dispatch:
   push:
-  pull_request:
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -15,18 +14,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: denoland/setup-deno@v2
+      - uses: actions/setup-node@v4
         with:
-          cache: true
+          node-version: 22
+          cache: npm
 
-      - name: Check formatting
-        run: deno fmt --check
+      - run: npm ci
 
-      - name: Lint
-        run: deno lint
+      - run: npm run lint
 
-      - name: Test
-        run: deno task test
+      - run: npm run check
 
-      - name: Build
-        run: deno task build
+      - run: npm run test
+
+      - run: npm run build

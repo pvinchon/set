@@ -5,7 +5,7 @@
 **Status**: Draft  
 **Input**: User description: "website must work offline"
 
-## User Scenarios & Testing *(mandatory)*
+## User Scenarios & Testing _(mandatory)_
 
 ### User Story 1 - Browse the Site Without an Internet Connection (Priority: P1)
 
@@ -62,7 +62,7 @@ A visitor on a mobile device or supported desktop browser is prompted (or can ma
 - What happens when the user clears their browser cache or site data? Offline access is lost until the next online visit, at which point the cache is rebuilt automatically.
 - What happens when the site is deployed with new content but the visitor stays on a cached version? The background update mechanism fetches new content; the visitor sees updated content on their next navigation or reload.
 
-## Requirements *(mandatory)*
+## Requirements _(mandatory)_
 
 ### Functional Requirements
 
@@ -88,7 +88,7 @@ A visitor on a mobile device or supported desktop browser is prompted (or can ma
 - Icon assets (192×192, 512×512) will need to be created or sourced as part of implementation; exact design is not specified here and can follow the existing site aesthetic.
 - The offline caching scope covers only assets generated and served by this site. Third-party resources loaded from external CDNs (if any are added in the future) are out of scope.
 
-## Success Criteria *(mandatory)*
+## Success Criteria _(mandatory)_
 
 ### Measurable Outcomes
 

@@ -5,7 +5,7 @@
 **Status**: Draft  
 **Input**: User description: "A title screen to start the game in easy, medium, or hard"
 
-## User Scenarios & Testing *(mandatory)*
+## User Scenarios & Testing _(mandatory)_
 
 ### User Story 1 - Choose Difficulty and Start Game (Priority: P1)
 
@@ -69,7 +69,7 @@ While playing, the player can return to the title screen to select a different d
 - What happens if the player rapidly clicks multiple difficulty buttons? Only the first selection is processed; subsequent clicks are ignored until the game has fully initialized.
 - What happens if the player clicks the return-to-title option during a card animation? The animation completes or is interrupted gracefully, then the title screen is shown.
 
-## Requirements *(mandatory)*
+## Requirements _(mandatory)_
 
 ### Functional Requirements
 
@@ -95,7 +95,7 @@ While playing, the player can return to the title screen to select a different d
 - **Board** (extended): The set of face-up cards in play, with a configurable card count (9 or 12) and attribute count (3 or 4) based on the selected difficulty. Always contains at least one valid set.
 - **Attribute**: A feature dimension used for set validation. The four possible attributes are number, shape, shading, and color. Easy and Normal fix number to 1, using shape, shading, and color as the 3 active attributes; Hard uses all 4.
 
-## Success Criteria *(mandatory)*
+## Success Criteria _(mandatory)_
 
 ### Measurable Outcomes
 

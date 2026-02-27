@@ -12,15 +12,15 @@ This feature has no external API (no server, no HTTP endpoints, no WebSocket). A
 ```typescript
 /** The three difficulty levels available to the player. */
 enum DifficultyLevel {
-  Easy = "easy",
-  Normal = "normal",
-  Hard = "hard",
+	Easy = 'easy',
+	Normal = 'normal',
+	Hard = 'hard'
 }
 
 /** Game configuration derived from a difficulty level. */
 interface DifficultyConfig {
-  readonly boardSize: number;  // 9 or 12
-  readonly deckOptions: DeckOptions;
+	readonly boardSize: number; // 9 or 12
+	readonly deckOptions: DeckOptions;
 }
 
 /** Returns the game configuration for a given difficulty level. */
@@ -38,10 +38,10 @@ function generateInitialState(deck: Deck, boardSize?: number): GameState;
 
 ```typescript
 interface GameState {
-  readonly deck: Deck;
-  readonly board: Board;
-  readonly selection: Selection;
-  readonly difficulty: DifficultyLevel;  // NEW
+	readonly deck: Deck;
+	readonly board: Board;
+	readonly selection: Selection;
+	readonly difficulty: DifficultyLevel; // NEW
 }
 ```
 
@@ -50,16 +50,13 @@ interface GameState {
 ```typescript
 /** Initialize the title screen. Called on DOMContentLoaded. */
 function initTitleScreen(
-  titleContainer: HTMLElement,
-  gameContainer: HTMLElement,
-  boardContainer: HTMLElement,
+	titleContainer: HTMLElement,
+	gameContainer: HTMLElement,
+	boardContainer: HTMLElement
 ): void;
 
 /** Initialize and start a game with the given difficulty. */
-function initGame(
-  container: HTMLElement,
-  difficulty: DifficultyLevel,
-): void;
+function initGame(container: HTMLElement, difficulty: DifficultyLevel): void;
 ```
 
 ## HTML Contract (index.vto)
@@ -67,16 +64,16 @@ function initGame(
 ```html
 <!-- Title screen: visible on load -->
 <div id="title-screen">
-  <h1>Set</h1>
-  <button data-difficulty="easy">Easy</button>
-  <button data-difficulty="normal">Normal</button>
-  <button data-difficulty="hard">Hard</button>
+	<h1>Set</h1>
+	<button data-difficulty="easy">Easy</button>
+	<button data-difficulty="normal">Normal</button>
+	<button data-difficulty="hard">Hard</button>
 </div>
 
 <!-- Game screen: hidden on load -->
 <div id="game-screen" class="hidden">
-  <button id="back-to-title">← Set</button>
-  <div id="game-board"></div>
+	<button id="back-to-title">← Set</button>
+	<div id="game-board"></div>
 </div>
 ```
 
@@ -84,8 +81,8 @@ Element IDs and `data-difficulty` attributes form the contract between HTML and 
 
 ### Difficulty Config Values
 
-| Difficulty | `boardSize` | `deckOptions` |
-|------------|-------------|---------------|
-| Easy | 9 | `{ nums: [Num.A] }` |
-| Normal | 12 | `{ nums: [Num.A] }` |
-| Hard | 12 | `{}` |
+| Difficulty | `boardSize` | `deckOptions`       |
+| ---------- | ----------- | ------------------- |
+| Easy       | 9           | `{ nums: [Num.A] }` |
+| Normal     | 12          | `{ nums: [Num.A] }` |
+| Hard       | 12          | `{}`                |

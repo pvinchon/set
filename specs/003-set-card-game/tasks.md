@@ -15,8 +15,8 @@
 
 **Purpose**: Configure build pipeline and project scaffolding for game module
 
-- [x] T001 Configure esbuild plugin and register game entry point (`site.add("game/main.ts"); site.use(esbuild())`) in _config.ts
-- [x] T002 [P] Add `<script type="module" src="/game/main.js"></script>` to src/_includes/layout.vto
+- [x] T001 Configure esbuild plugin and register game entry point (`site.add("game/main.ts"); site.use(esbuild())`) in \_config.ts
+- [x] T002 [P] Add `<script type="module" src="/game/main.js"></script>` to src/\_includes/layout.vto
 
 ---
 
@@ -131,6 +131,7 @@
 ### Parallel Opportunities
 
 **Phase 2** (after T003):
+
 ```
 T004 [P] card_gen.ts  ─┐
 T005 [P] set.ts        ├─ parallel
@@ -139,6 +140,7 @@ T007 [P] set_test.ts   ─┘
 ```
 
 **Phase 3** (all [P] tasks together, then sequential):
+
 ```
 T008 [P] board.ts        ─┐
 T009 [P] selection.ts     │
@@ -153,6 +155,7 @@ T015    main.ts           (after all above)
 ```
 
 **After US1** (Phases 4, 5, 6 in parallel):
+
 ```
 T016 [US2] board tests    ─┐
 T017 [US3] endurance      ├─ parallel

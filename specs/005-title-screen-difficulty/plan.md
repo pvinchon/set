@@ -21,19 +21,19 @@ Add a title screen that gates gameplay behind a difficulty selection (Easy / Nor
 
 ## Constitution Check
 
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+_GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
 
-| Principle | Status | Notes |
-|-----------|--------|-------|
-| I. Lightweight & Fast | PASS | Title screen is pure DOM + Tailwind classes, no new dependencies. Three buttons add negligible payload. |
-| II. Offline-First | PASS | No network calls. Title screen is part of the static build, cached by existing Service Worker. |
-| III. Simplicity | PASS | Title screen shows only what's needed: game name + 3 buttons. "Back" button is the single addition during gameplay. Difficulty config is a small lookup — no settings panel or persistence. |
-| Runtime: Deno | PASS | All code is Deno TypeScript. |
-| Language: TypeScript | PASS | No new languages introduced. |
-| Styling: Tailwind CSS | PASS | Title screen styled with Tailwind utility classes only. |
-| Build: Lume | PASS | Existing Lume pipeline handles the new code via esbuild. |
-| Testing: deno test | PASS | New tests follow existing co-located `*_test.ts` pattern. |
-| WCAG 2.1 AA | PASS | Buttons are semantic `<button>` elements with clear labels. Contrast ratios maintained. |
+| Principle             | Status | Notes                                                                                                                                                                                       |
+| --------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| I. Lightweight & Fast | PASS   | Title screen is pure DOM + Tailwind classes, no new dependencies. Three buttons add negligible payload.                                                                                     |
+| II. Offline-First     | PASS   | No network calls. Title screen is part of the static build, cached by existing Service Worker.                                                                                              |
+| III. Simplicity       | PASS   | Title screen shows only what's needed: game name + 3 buttons. "Back" button is the single addition during gameplay. Difficulty config is a small lookup — no settings panel or persistence. |
+| Runtime: Deno         | PASS   | All code is Deno TypeScript.                                                                                                                                                                |
+| Language: TypeScript  | PASS   | No new languages introduced.                                                                                                                                                                |
+| Styling: Tailwind CSS | PASS   | Title screen styled with Tailwind utility classes only.                                                                                                                                     |
+| Build: Lume           | PASS   | Existing Lume pipeline handles the new code via esbuild.                                                                                                                                    |
+| Testing: deno test    | PASS   | New tests follow existing co-located `*_test.ts` pattern.                                                                                                                                   |
+| WCAG 2.1 AA           | PASS   | Buttons are semantic `<button>` elements with clear labels. Contrast ratios maintained.                                                                                                     |
 
 No violations. No complexity tracking needed.
 

@@ -12,14 +12,15 @@ This feature has no persistent data store. The "data model" consists entirely of
 
 The single HTML page output by the Lume build.
 
-| Attribute     | Type   | Description                                      |
-|---------------|--------|--------------------------------------------------|
-| `greetingText`| string | Primary visible content: "Hello, World!"         |
-| `stylesheetRef`| string | Path to the generated CSS file (`/style.css`)   |
+| Attribute       | Type   | Description                                   |
+| --------------- | ------ | --------------------------------------------- |
+| `greetingText`  | string | Primary visible content: "Hello, World!"      |
+| `stylesheetRef` | string | Path to the generated CSS file (`/style.css`) |
 
 **Lifecycle**: Generated at build time by Lume from `src/index.vto` + `src/_includes/layout.vto`. No runtime state transitions.
 
 **Validation rules**:
+
 - `greetingText` MUST contain "Hello, World!" (exact text).
 - Output HTML MUST be well-formed.
 - Output CSS MUST be present and non-empty after Tailwind purge.
@@ -28,22 +29,22 @@ The single HTML page output by the Lume build.
 
 Defined in `.github/workflows/ci.yml`.
 
-| Attribute       | Type     | Description                                       |
-|-----------------|----------|---------------------------------------------------|
-| `triggers`      | string[] | `push`, `pull_request`                            |
-| `steps`         | string[] | `checkout`, `setup-deno`, `fmt`, `lint`, `test`, `build` |
-| `requiredStatus`| boolean  | Must pass for PR merge                            |
+| Attribute        | Type     | Description                                              |
+| ---------------- | -------- | -------------------------------------------------------- |
+| `triggers`       | string[] | `push`, `pull_request`                                   |
+| `steps`          | string[] | `checkout`, `setup-deno`, `fmt`, `lint`, `test`, `build` |
+| `requiredStatus` | boolean  | Must pass for PR merge                                   |
 
 ### CD Pipeline Configuration
 
 Defined in `.github/workflows/cd.yml`.
 
-| Attribute        | Type     | Description                                        |
-|------------------|----------|----------------------------------------------------|
-| `triggers`       | string[] | `push` to `main` only                              |
-| `steps`          | string[] | `checkout`, `setup-deno`, `build`, `configure-pages`, `upload-artifact`, `deploy-pages` |
-| `environment`    | string   | `github-pages`                                     |
-| `concurrency`    | string   | `pages` group, no cancel-in-progress               |
+| Attribute     | Type     | Description                                                                             |
+| ------------- | -------- | --------------------------------------------------------------------------------------- |
+| `triggers`    | string[] | `push` to `main` only                                                                   |
+| `steps`       | string[] | `checkout`, `setup-deno`, `build`, `configure-pages`, `upload-artifact`, `deploy-pages` |
+| `environment` | string   | `github-pages`                                                                          |
+| `concurrency` | string   | `pages` group, no cancel-in-progress                                                    |
 
 ## Relationships
 

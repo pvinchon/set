@@ -9,39 +9,39 @@
 
 An enum representing the three difficulty options available to the player.
 
-| Value | Label |
-|-------|-------|
-| `Easy` | "Easy" |
+| Value    | Label    |
+| -------- | -------- |
+| `Easy`   | "Easy"   |
 | `Normal` | "Normal" |
-| `Hard` | "Hard" |
+| `Hard`   | "Hard"   |
 
 ### DifficultyConfig (new)
 
 A configuration object derived from a `DifficultyLevel`. Determines the game parameters for that difficulty.
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `boardSize` | `9 \| 12` | Number of cards on the board |
+| Field         | Type          | Description                                     |
+| ------------- | ------------- | ----------------------------------------------- |
+| `boardSize`   | `9 \| 12`     | Number of cards on the board                    |
 | `deckOptions` | `DeckOptions` | Attribute restrictions passed to `createDeck()` |
 
 #### Difficulty → Config Mapping
 
-| Difficulty | Board Size | Deck Options | Deck Size | Active Attributes |
-|------------|-----------|--------------|-----------|-------------------|
-| Easy | 9 | `{ nums: [Num.A] }` | 27 | shape, shading, color |
-| Normal | 12 | `{ nums: [Num.A] }` | 27 | shape, shading, color |
-| Hard | 12 | `{}` (all defaults) | 81 | number, shape, shading, color |
+| Difficulty | Board Size | Deck Options        | Deck Size | Active Attributes             |
+| ---------- | ---------- | ------------------- | --------- | ----------------------------- |
+| Easy       | 9          | `{ nums: [Num.A] }` | 27        | shape, shading, color         |
+| Normal     | 12         | `{ nums: [Num.A] }` | 27        | shape, shading, color         |
+| Hard       | 12         | `{}` (all defaults) | 81        | number, shape, shading, color |
 
 ### GameState (extended)
 
 The existing `GameState` gains one new field.
 
-| Field | Type | Status | Description |
-|-------|------|--------|-------------|
-| `deck` | `Deck` | existing | The card pool for drawing replacements |
-| `board` | `Board` | existing | Face-up cards in play |
-| `selection` | `Selection` | existing | Currently selected card indices |
-| `difficulty` | `DifficultyLevel` | **new** | The active difficulty for this game session |
+| Field        | Type              | Status   | Description                                 |
+| ------------ | ----------------- | -------- | ------------------------------------------- |
+| `deck`       | `Deck`            | existing | The card pool for drawing replacements      |
+| `board`      | `Board`           | existing | Face-up cards in play                       |
+| `selection`  | `Selection`       | existing | Currently selected card indices             |
+| `difficulty` | `DifficultyLevel` | **new**  | The active difficulty for this game session |
 
 ### Card (unchanged)
 

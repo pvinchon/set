@@ -36,11 +36,11 @@ This feature adds a **difficulty selection title screen** before gameplay begins
 
 A new domain module defining the three difficulty levels and their game configurations:
 
-| File | Purpose |
-|------|---------|
-| `model.ts` | `DifficultyLevel` enum, `DifficultyConfig` type, `getDifficultyConfig()` function |
-| `mod.ts` | Barrel re-exports |
-| `model_test.ts` | Tests for config mapping |
+| File            | Purpose                                                                           |
+| --------------- | --------------------------------------------------------------------------------- |
+| `model.ts`      | `DifficultyLevel` enum, `DifficultyConfig` type, `getDifficultyConfig()` function |
+| `mod.ts`        | Barrel re-exports                                                                 |
+| `model_test.ts` | Tests for config mapping                                                          |
 
 ### Modified: `src/game/state/`
 
