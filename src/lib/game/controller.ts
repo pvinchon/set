@@ -1,7 +1,7 @@
-import { cardEquals } from '$lib/game/card/equality';
-import type { Card } from '$lib/game/card/model';
-import { createDeck } from '$lib/game/deck/factory';
-import { DifficultyLevel, getDifficultyConfig } from '$lib/game/difficulty/model';
+import { cardEquals } from '$lib/game/card';
+import type { Card } from '$lib/game/card';
+import { createDeck } from '$lib/game/deck';
+import { DifficultyLevel, getDifficultyConfig } from '$lib/game/difficulty';
 import { selectCard, type SelectionResult } from '$lib/game/state/actions';
 import { generateInitialState } from '$lib/game/state/generator';
 import type { GameState } from '$lib/game/state/model';

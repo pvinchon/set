@@ -6,9 +6,3 @@ export enum Color {
 	B = 1,
 	C = 2
 }
-
-export const COLOR_HEX: Record<Color, string> = {
-	[Color.A]: '#dc267f',
-	[Color.B]: '#648fff',
-	[Color.C]: '#ffb000'
-};

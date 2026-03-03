@@ -1,14 +1,13 @@
 <script lang="ts">
 	import type { Card } from './model.ts';
-	import { COLOR_HEX } from '$lib/game/attributes/color';
-	import { Shading } from '$lib/game/attributes/shading';
 	import {
-		shapePath,
 		SHAPE_WIDTH,
 		SHAPE_HEIGHT,
-		SHAPE_STROKE_WIDTH
+		SHAPE_STROKE_WIDTH,
+		SHAPE_VIEWBOX
 	} from '$lib/game/attributes/shape';
 	import { getPositionFactor } from '$lib/utils/grid';
+	import { getActiveConfig } from '$lib/game/config';
 
 	let {
 		card,
@@ -22,26 +21,17 @@
 		onSelect: (card: Card) => void;
 	} = $props();
 
+	// Config is read once per component instance; new config takes effect on next navigation.
+	const config = getActiveConfig();
+
 	let count = $derived(card.num + 1);
-	let color = $derived(COLOR_HEX[card.color]);
-	let path = $derived(shapePath(card.shape, SHAPE_WIDTH, SHAPE_HEIGHT));
+	let color = $derived(config.colorHexMap[card.color]);
+	let path = $derived(config.shapePathMap[card.shape](SHAPE_WIDTH, SHAPE_HEIGHT));
 
-	let patternId = $derived(`stripe-${card.color}-${card.shape}`);
+	let patternId = $derived(`pattern-${card.color}-${card.shading}`);
+	let fill = $derived(config.shadingMap[card.shading].fill(patternId, color));
 
-	let fill = $derived.by(() => {
-		switch (card.shading) {
-			case Shading.A:
-				return color; // solid
-			case Shading.B:
-				return `url(#${patternId})`; // striped
-			case Shading.C:
-				return 'none'; // open
-		}
-	});
-
-	let viewBox = $derived(
-		`${0 - SHAPE_STROKE_WIDTH / 2} ${0 - SHAPE_STROKE_WIDTH / 2} ${SHAPE_WIDTH + SHAPE_STROKE_WIDTH} ${SHAPE_HEIGHT + SHAPE_STROKE_WIDTH}`
-	);
+	let viewBox = SHAPE_VIEWBOX;
 
 	/** Selection transform intensities. */
 	const SEL = {
@@ -111,9 +101,7 @@
 		'flex flex-col items-center justify-center gap-1',
 		'touch-manipulation transition-all duration-200 ease-[cubic-bezier(0.34,1.56,0.64,1)]',
 		selected && 'shadow-lg'
-	]
-		.filter(Boolean)
-		.join(' ')}
+	]}
 	style:transform={cardTransform || undefined}
 	onclick={() => onSelect(card)}
 	onpointerenter={handlePointerEnter}

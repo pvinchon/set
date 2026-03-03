@@ -1,5 +1,1 @@
-export {
-	type DifficultyConfig,
-	DifficultyLevel,
-	getDifficultyConfig
-} from '$lib/game/difficulty/model';
+export { DifficultyLevel, getDifficultyConfig } from '$lib/game/difficulty/model';
