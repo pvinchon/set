@@ -15,6 +15,7 @@
 			{#each shadings as shading (shading)}
 				{@const patternId = `pattern-${color}-${shading}`}
 				{@const colorHex = config.colorHexMap[color]}
+				<!-- eslint-disable-next-line svelte/no-at-html-tags -- safe: defs come from hardcoded PatternDef, not user input -->
 				{@html config.shadingMap[shading].svgDefs(patternId, colorHex)}
 			{/each}
 		{/each}

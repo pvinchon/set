@@ -69,6 +69,7 @@
 				>
 					<svg viewBox={SHAPE_VIEWBOX} class="h-16 w-16">
 						{#if defsHtml}
+							<!-- eslint-disable-next-line svelte/no-at-html-tags -- safe: defs come from hardcoded PatternDef, not user input -->
 							{@html `<defs>${defsHtml}</defs>`}
 						{/if}
 						<path
