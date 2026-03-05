@@ -1,12 +1,11 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import { browser } from '$app/environment';
 	import Board from '$lib/game/board/Board.svelte';
-	import type { Card } from '$lib/game/card/model';
+	import type { Card } from '$lib/game/card';
 	import type { GameState } from '$lib/game/state/model';
 	import { getDealInTotalDuration } from '$lib/game/board/animations';
+	import PageShell from '$lib/components/PageShell.svelte';
 	import {
 		parseDifficulty,
 		createGame,
@@ -46,31 +45,15 @@
 			}
 		});
 	}
-
-	function handleQuit() {
-		goto(resolve('/'));
-	}
 </script>
 
-<div class="flex min-h-screen w-full animate-screen-in flex-col items-center">
-	<div class="flex w-full max-w-screen-sm items-center px-4 pt-4">
-		<button
-			class="cursor-pointer font-medium text-gray-500 transition-colors hover:text-gray-700"
-			onclick={handleQuit}
-			type="button"
-		>
-			&larr; back
-		</button>
-	</div>
-
-	<div class="flex w-full flex-1 items-center justify-center p-4">
-		<Board
-			board={gameState.board}
-			selectedCards={selectedCards()}
-			onCardSelect={handleCardSelect}
-			{animationClass}
-			{affectedIndices}
-			{initialDeal}
-		/>
-	</div>
-</div>
+<PageShell>
+	<Board
+		board={gameState.board}
+		selectedCards={selectedCards()}
+		onCardSelect={handleCardSelect}
+		{animationClass}
+		{affectedIndices}
+		{initialDeal}
+	/>
+</PageShell>

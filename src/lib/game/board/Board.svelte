@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { Board } from './model.ts';
-	import type { Card } from '$lib/game/card/model';
+	import type { Card } from '$lib/game/card';
 	import CardComponent from '$lib/game/card/Card.svelte';
 	import Patterns from '$lib/game/board/Patterns.svelte';
-	import { cardEquals } from '$lib/game/card/equality';
+	import { cardEquals } from '$lib/game/card';
 	import {
 		ANIM_DURATIONS,
 		ANIM_CONFIG,
@@ -75,7 +75,7 @@
 	class={[
 		'grid w-full max-w-screen-sm gap-4',
 		columns === 3 ? 'grid-cols-3' : 'grid-cols-3 sm:grid-cols-4'
-	].join(' ')}
+	]}
 >
 	{#each board.cards as card, index (index)}
 		<div class={getCardClasses(index)} style={getCardStyle(index)} data-index={index}>
