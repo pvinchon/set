@@ -21,9 +21,16 @@
 	import PageShell from '$lib/components/PageShell.svelte';
 
 	// Draft preferences — mutated locally until the user saves
-	let draftColors = $state<[string, string, string]>([...loadPreferences().colors]);
-	let draftShapes = $state<[string, string, string]>([...loadPreferences().shapes]);
-	let draftPatterns = $state<[string, string, string]>([...loadPreferences().patterns]);
+	const prefs = loadPreferences();
+	let draftColors = $state<[string, string, string]>(
+		prefs.colors.slice() as [string, string, string]
+	);
+	let draftShapes = $state<[string, string, string]>(
+		prefs.shapes.slice() as [string, string, string]
+	);
+	let draftPatterns = $state<[string, string, string]>(
+		prefs.patterns.slice() as [string, string, string]
+	);
 
 	let draftPrefs = $derived({
 		colors: draftColors,

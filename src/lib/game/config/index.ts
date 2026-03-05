@@ -9,7 +9,7 @@ export {
 	SHAPE_PALETTE
 } from './model';
 
-export { loadPreferences, savePreferences } from './persistence';
+export { loadPreferences, savePreferences, clearPreferences } from './persistence';
 
 import type { ActiveConfig } from './model';
 import { buildActiveConfig, DEFAULT_PREFERENCES } from './model';

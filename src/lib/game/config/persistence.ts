@@ -27,3 +27,13 @@ export function savePreferences(prefs: PlayerPreferences): boolean {
 		return false;
 	}
 }
+
+/** Clear saved preferences from localStorage. Returns true on success, false on failure. */
+export function clearPreferences(): boolean {
+	try {
+		localStorage.removeItem(STORAGE_KEY);
+		return true;
+	} catch {
+		return false;
+	}
+}

@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, expect, test, vi } from 'vitest';
-import { loadPreferences, savePreferences } from '$lib/game/config/persistence';
+import { loadPreferences, savePreferences, clearPreferences } from '$lib/game/config/persistence';
 import { DEFAULT_PREFERENCES } from '$lib/game/config/model';
 import type { PlayerPreferences } from '$lib/game/config/model';
 
@@ -9,27 +9,29 @@ const STORAGE_KEY = 'set-game-prefs';
 // ─── localStorage stub (Node environment doesn't have localStorage) ──
 
 const store = new Map<string, string>();
-vi.stubGlobal('localStorage', {
-	getItem: (key: string) => store.get(key) ?? null,
-	setItem: (key: string, value: string) => {
-		store.set(key, value);
-	},
-	removeItem: (key: string) => {
-		store.delete(key);
-	},
-	clear: () => {
-		store.clear();
-	}
-});
 
-// ─── Helpers ─────────────────────────────────────────────────────────
-
+// Stub localStorage for each test and restore it afterwards to avoid leaking
+// the stubbed global into other test files.
 beforeEach(() => {
+	vi.stubGlobal('localStorage', {
+		getItem: (key: string) => store.get(key) ?? null,
+		setItem: (key: string, value: string) => {
+			store.set(key, value);
+		},
+		removeItem: (key: string) => {
+			store.delete(key);
+		},
+		clear: () => {
+			store.clear();
+		}
+	});
+
 	store.clear();
 });
 
 afterEach(() => {
 	store.clear();
+	vi.unstubAllGlobals();
 });
 
 // ─── loadPreferences ────────────────────────────────────────────────
@@ -89,15 +91,28 @@ test('savePreferences stores to localStorage and returns true', () => {
 	expect(stored).toEqual(JSON.stringify(prefs));
 });
 
-// ─── localStorage cleanup ────────────────────────────────────────────
+// ─── clearPreferences ────────────────────────────────────────────────
 
-test('localStorage.removeItem removes the storage key', () => {
+test('clearPreferences removes stored preferences and returns true', () => {
 	localStorage.setItem(STORAGE_KEY, 'something');
-	localStorage.removeItem(STORAGE_KEY);
+	const result = clearPreferences();
+	expect(result).toEqual(true);
 	expect(localStorage.getItem(STORAGE_KEY)).toEqual(null);
 });
 
-test('localStorage.removeItem does not throw when key missing', () => {
-	localStorage.removeItem(STORAGE_KEY);
+test('clearPreferences returns true when key is not present', () => {
+	const result = clearPreferences();
+	expect(result).toEqual(true);
 	expect(localStorage.getItem(STORAGE_KEY)).toEqual(null);
+});
+
+test('clearPreferences causes loadPreferences to return defaults', () => {
+	const prefs: PlayerPreferences = {
+		colors: ['teal-600', 'purple-700', 'red-500'],
+		shapes: ['hexagram', 'pentagram', 'hexagon'],
+		patterns: ['dotted', 'inverse-dots', 'horizontal']
+	};
+	savePreferences(prefs);
+	clearPreferences();
+	expect(loadPreferences()).toEqual(DEFAULT_PREFERENCES);
 });
